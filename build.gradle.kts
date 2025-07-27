@@ -26,6 +26,7 @@ dependencies {
 	testImplementation(libs.kotlin.test.junit5)
 	testRuntimeOnly(libs.junit.platform.launcher)
 	implementation(libs.exposed.spring.boot.starter)
+	implementation(libs.exposed.kotlin.datetime)
 	implementation(libs.jackson.module.kotlin)
 	runtimeOnly(libs.h2)
 }
