@@ -8,12 +8,12 @@ object Posts : Table("Posts") {
     val id = integer("id").autoIncrement()
     val userId: Column<Long> = reference("user_id", Users.id)
     val commentId: Column<Int> = reference("comment_id", Comments.id)
-    val title = varchar("title", 255).nullable()
-    val image = blob("image").nullable()
+    val title = varchar("title", 255)
+    val image = blob("image")
     val category = enumerationByName("category", 20, PostCategory::class).nullable()
-    val body = text("body").nullable()
-    val createdAt = datetime("created_at").nullable()
-    val updatedAt = datetime("updated_at").nullable()
+    val body = text("body")
+    val createdAt = datetime("created_at")
+    val updatedAt = datetime("updated_at")
 
     override val primaryKey = PrimaryKey(id)
 }

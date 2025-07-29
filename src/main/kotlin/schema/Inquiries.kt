@@ -10,9 +10,9 @@ object Inquiries : Table("inquiries") {
     val content = text("content")
     val answer = text("answer").nullable()
     val isSecret = char("is_secret", 1)
-    val createdAt = datetime("created_at").nullable()
-    val updatedAt = datetime("updated_at").nullable()
     val writer: Column<Long> = reference("writer", Users.id)
+    val createdAt = datetime("created_at")
+    val updatedAt = datetime("updated_at")
 
     override val primaryKey = PrimaryKey(id)
 }

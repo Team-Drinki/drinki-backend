@@ -10,9 +10,9 @@ object Comments : Table("Comments") {
     val targetType = enumerationByName("target_type", 20, TargetType::class)
     val targetId = integer("target_id")
     val parentId: Column<Int?> = reference("parent_id", id).nullable()
-    val body = text("body").nullable()
-    val createdAt = datetime("created_at").nullable()
-    val updatedAt = datetime("updated_at").nullable()
+    val body = text("body")
+    val createdAt = datetime("created_at")
+    val updatedAt = datetime("updated_at")
 
     override val primaryKey = PrimaryKey(id)
 }

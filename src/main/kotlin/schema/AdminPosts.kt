@@ -9,9 +9,9 @@ object AdminPosts : Table("admin_posts") {
     val title = varchar("title", 100)
     val content = text("content")
     val postType = varchar("post_type", 20) // enum('NOTICE', 'FAQ')
-    val createdAt = datetime("created_at").nullable()
-    val updatedAt = datetime("updated_at").nullable()
     val writer: Column<Long> = reference("writer", Users.id)
+    val createdAt = datetime("created_at")
+    val updatedAt = datetime("updated_at")
 
     override val primaryKey = PrimaryKey(id)
 }

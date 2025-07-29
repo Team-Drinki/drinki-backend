@@ -10,8 +10,8 @@ object Reactions : Table("Reactions") {
     val targetType = enumerationByName("target_type", 20, ReactionTargetType::class)
     val targetId = integer("target_id")
     val reactionType = enumerationByName("reaction_type", 10, ReactionType::class)
-    val createdAt = datetime("created_at").nullable()
-    val updatedAt = datetime("updated_at").nullable()
+    val createdAt = datetime("created_at")
+    val updatedAt = datetime("updated_at")
 
     override val primaryKey = PrimaryKey(id)
 }
