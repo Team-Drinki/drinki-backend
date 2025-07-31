@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseCookie
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -19,7 +18,7 @@ class AuthController (private val jwt: JwtProvider) {
     /**
      * 구글 로그인 API
      */
-    @GetMapping("/login/google")
+    @PostMapping("/login/google")
     fun loginGoogle(response: HttpServletResponse) {
         response.status = HttpStatus.FOUND.value()
         response.setHeader("Location", "/oauth2/authorization/google")
