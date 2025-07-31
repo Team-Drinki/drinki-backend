@@ -11,10 +11,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Service
 
 @Service
-class CustomOAuth2UserService(
-    private val clientService: OAuth2AuthorizedClientService
-) : OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-
+class CustomOAuth2UserService() : OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private val delegate = DefaultOAuth2UserService()
 
     override fun loadUser(request: OAuth2UserRequest): OAuth2User {
