@@ -30,7 +30,7 @@ dependencies {
 	implementation(libs.exposed.spring.boot.starter)
 	implementation(libs.exposed.kotlin.datetime)
 	implementation(libs.exposed.json)
-	implementation(libs.jackson.module.kotlin)
+//	implementation(libs.jackson.module.kotlin)
 	runtimeOnly(libs.h2)
 }
 
