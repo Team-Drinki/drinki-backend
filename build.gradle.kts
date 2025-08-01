@@ -1,5 +1,6 @@
 plugins {
 	alias(libs.plugins.kotlin.jvm)
+	alias(libs.plugins.kotlin.serialization)
 	alias(libs.plugins.kotlin.spring)
 	alias(libs.plugins.spring.boot)
 	alias(libs.plugins.spring.dependency.management)
@@ -20,6 +21,7 @@ repositories {
 
 dependencies {
 	implementation(libs.kotlin.reflect)
+	implementation(libs.kotlinx.serialization.json)
 	implementation(libs.spring.boot.starter.web)
 	testImplementation(libs.spring.boot.starter.test)
 	developmentOnly(libs.spring.boot.devtools)
@@ -27,6 +29,7 @@ dependencies {
 	testRuntimeOnly(libs.junit.platform.launcher)
 	implementation(libs.exposed.spring.boot.starter)
 	implementation(libs.exposed.kotlin.datetime)
+	implementation(libs.exposed.json)
 	implementation(libs.jackson.module.kotlin)
 	runtimeOnly(libs.h2)
 }

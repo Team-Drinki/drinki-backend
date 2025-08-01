@@ -3,20 +3,19 @@ package schema
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.datetime.datetime
 
-object Alcohols : Table("Alcohols") {
+enum class AlcoholRequestStatus { approve, pending, reject }
+
+object AlcoholRequests : Table("AlcoholRequests") {
     val id = integer("id").autoIncrement()
-    val tastingNoteId = reference("tasting_note_id", TastingNotes.id)
-    val userId = reference("user_id", Users.id)
-    val commentId = reference("comment_id", Comments.id)
     val name = varchar("name", 255)
-    val image = blob("image")
-    val price = integer("price")
     val proof = short("proof")
     val categoryId = reference("category_id", AlcoholCategories.id)
     val styleId = reference("style_id", AlcoholStyles.id)
-    val locationId = reference("location_id", AlcoholLocations.id)
-    val content = text("content")
-    val rating = decimal("rating", 5, 2)
+    val locationId = reference("location_id", AlcoholLocations.id).nullable()
+    val userId = reference("user_id", Users.id)
+    val image = blob("image").nullable()
+    val status = enumerationByName("status", 20, AlcoholRequestStatus::class)
+    val content = text("content").nullable()
     val createdAt = datetime("created_at")
     val updatedAt = datetime("updated_at")
 

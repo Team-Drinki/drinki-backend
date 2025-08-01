@@ -1,12 +1,14 @@
 package schema
 
 import org.jetbrains.exposed.v1.core.Table
-import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.datetime.datetime
+
+enum class ReactionTargetType { post, comment, alcohol, tasting_note }
+enum class ReactionType { like, unlike }
 
 object Reactions : Table("Reactions") {
     val id = integer("id").autoIncrement()
-    val userId: Column<Long> = reference("user_id", Users.id)
+    val userId = reference("user_id", Users.id)
     val targetType = enumerationByName("target_type", 20, ReactionTargetType::class)
     val targetId = integer("target_id")
     val reactionType = enumerationByName("reaction_type", 10, ReactionType::class)
