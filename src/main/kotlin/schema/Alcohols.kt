@@ -7,7 +7,6 @@ object Alcohols : Table("Alcohols") {
     val id = integer("id").autoIncrement()
     val tastingNoteId = reference("tasting_note_id", TastingNotes.id)
     val userId = reference("user_id", Users.id)
-    val commentId = reference("comment_id", Comments.id)
     val name = varchar("name", 255)
     val image_url = text("image_url")
     val price = integer("price")
