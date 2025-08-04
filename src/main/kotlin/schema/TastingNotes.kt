@@ -17,7 +17,7 @@ object TastingNotes : Table("TastingNotes") {
     val userId = reference("user_id", Users.id)
     val commentId = reference("comment_id", Comments.id)
     val title = varchar("title", 255)
-    val image = blob("image").nullable()
+    val image_url = text("image_url").nullable()
     val aromaNote = jsonb<Note>("aroma_note", format)
     val palateNote = jsonb<Note>("palate_note", format)
     val finishNote = jsonb<Note>("finish_note", format)

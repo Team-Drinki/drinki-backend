@@ -9,7 +9,7 @@ object Alcohols : Table("Alcohols") {
     val userId = reference("user_id", Users.id)
     val commentId = reference("comment_id", Comments.id)
     val name = varchar("name", 255)
-    val image = blob("image")
+    val image_url = text("image_url")
     val price = integer("price")
     val proof = short("proof")
     val categoryId = reference("category_id", AlcoholCategories.id)

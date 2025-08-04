@@ -10,7 +10,7 @@ object Posts : Table("Posts") {
     val userId = reference("user_id", Users.id)
     val commentId = reference("comment_id", Comments.id)
     val title = varchar("title", 255)
-    val image = blob("image").nullable()
+    val image_url = text("image_url").nullable()
     val category = enumerationByName("category", 20, PostCategory::class)
     val body = text("body")
     val createdAt = datetime("created_at")

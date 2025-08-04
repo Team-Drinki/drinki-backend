@@ -13,7 +13,7 @@ object AlcoholRequests : Table("AlcoholRequests") {
     val styleId = reference("style_id", AlcoholStyles.id)
     val locationId = reference("location_id", AlcoholLocations.id).nullable()
     val userId = reference("user_id", Users.id)
-    val image = blob("image").nullable()
+    val image_url = text("image_url").nullable()
     val status = enumerationByName("status", 20, AlcoholRequestStatus::class)
     val content = text("content").nullable()
     val createdAt = datetime("created_at")
