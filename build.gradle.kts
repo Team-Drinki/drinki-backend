@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
 	alias(libs.plugins.kotlin.jvm)
 	alias(libs.plugins.kotlin.serialization)
@@ -33,7 +35,7 @@ dependencies {
 	implementation(libs.exposed.json)
 	implementation(libs.exposed.migration)
 //	implementation(libs.jackson.module.kotlin)
-	runtimeOnly(libs.h2)
+	runtimeOnly(libs.postgresql)
 }
 
 kotlin {
@@ -55,6 +57,10 @@ flyway {
 	locations = arrayOf("filesystem:src/main/resources/db/migration")
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+//tasks.withType<Test> {
+//	useJUnitPlatform()
+//}
+
+tasks.named<BootJar>("bootJar") {
+	archiveFileName = "${rootProject.name}.jar"
 }

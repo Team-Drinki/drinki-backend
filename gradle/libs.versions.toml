@@ -5,7 +5,7 @@ spring-boot = "3.5.3"
 junit-platform-launcher = "1.13.3"
 exposed = "1.0.0-beta-3"
 #jackson-module-kotlin = "2.19.0"
-h2 = "2.3.232"
+postgresql = "42.7.7"
 flyway = "11.10.5"
 
 [libraries]
@@ -21,7 +21,7 @@ exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datet
 exposed-json = { module = "org.jetbrains.exposed:exposed-json", version.ref = "exposed" }
 exposed-migration = { module = "org.jetbrains.exposed:exposed-migration", version.ref = "exposed" }
 #jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson-module-kotlin" }
-h2 = { module = "com.h2database:h2", version.ref = "h2" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
