@@ -4,6 +4,7 @@ plugins {
 	alias(libs.plugins.kotlin.spring)
 	alias(libs.plugins.spring.boot)
 	alias(libs.plugins.spring.dependency.management)
+	alias(libs.plugins.flyway)
 }
 
 group = "io.github.ssudrinki"
@@ -30,6 +31,7 @@ dependencies {
 	implementation(libs.exposed.spring.boot.starter)
 	implementation(libs.exposed.kotlin.datetime)
 	implementation(libs.exposed.json)
+	implementation(libs.exposed.migration)
 //	implementation(libs.jackson.module.kotlin)
 	runtimeOnly(libs.h2)
 }
@@ -44,6 +46,13 @@ allOpen {
 	annotation("jakarta.persistence.Entity")
 	annotation("jakarta.persistence.MappedSuperclass")
 	annotation("jakarta.persistence.Embeddable")
+}
+
+flyway {
+	url = System.getenv("DB_URL")
+	user = System.getenv("DB_USER")
+	password = System.getenv("DB_PASSWORD")
+	locations = arrayOf("filesystem:src/main/resources/db/migration")
 }
 
 tasks.withType<Test> {
