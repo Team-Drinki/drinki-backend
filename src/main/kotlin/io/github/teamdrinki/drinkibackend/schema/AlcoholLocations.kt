@@ -1,4 +1,4 @@
-package schema
+package io.github.teamdrinki.drinkibackend.schema
 
 import org.jetbrains.exposed.v1.core.Table
 
