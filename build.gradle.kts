@@ -9,6 +9,13 @@ plugins {
 	alias(libs.plugins.flyway)
 }
 
+buildscript {
+	dependencies {
+		classpath(libs.flyway.database.postgresql)
+		classpath(libs.postgresql)
+	}
+}
+
 group = "io.github.ssudrinki"
 version = "0.0.1-SNAPSHOT"
 
@@ -34,8 +41,10 @@ dependencies {
 	implementation(libs.exposed.kotlin.datetime)
 	implementation(libs.exposed.json)
 	implementation(libs.exposed.migration)
+	implementation(libs.exposed.jdbc)
 //	implementation(libs.jackson.module.kotlin)
 	runtimeOnly(libs.postgresql)
+	developmentOnly(libs.flyway.database.postgresql)
 }
 
 kotlin {
@@ -63,4 +72,11 @@ flyway {
 
 tasks.named<BootJar>("bootJar") {
 	archiveFileName = "${rootProject.name}.jar"
+}
+
+tasks.register<JavaExec>("generateMigration") {
+	group = "database"
+	description = "Generate Migration SQL"
+	classpath = sourceSets["main"].runtimeClasspath
+	mainClass.set("io.github.teamdrinki.drinkibackend.devops.MigrationScriptGeneratorKt")
 }
