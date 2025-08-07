@@ -45,6 +45,7 @@ dependencies {
 //	implementation(libs.jackson.module.kotlin)
 	runtimeOnly(libs.postgresql)
 	developmentOnly(libs.flyway.database.postgresql)
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 }
 
 kotlin {
