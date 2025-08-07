@@ -32,6 +32,8 @@ dependencies {
 	implementation(libs.exposed.json)
 //	implementation(libs.jackson.module.kotlin)
 	runtimeOnly(libs.h2)
+
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 }
 
 kotlin {
