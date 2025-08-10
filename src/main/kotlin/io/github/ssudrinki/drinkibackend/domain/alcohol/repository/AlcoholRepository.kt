@@ -21,7 +21,7 @@ interface AlcoholRepository {
      */
     fun searchAlcohols(query: String, page: Int, size: Int, sort: String,
                        category: String, location: String, style: String,
-                       priceMin: Int, priceMax: Int, rating: Double
+                       priceMin: Int, priceMax: Int, rating: Double // AlcoholSearchRequest
     ): List<AlcoholListItem>
 //    fun findById(id: Int): ResultRow?
 //    fun create(name: String, proof: Short, categoryId: Int, styleId: Int, locationId: Int,

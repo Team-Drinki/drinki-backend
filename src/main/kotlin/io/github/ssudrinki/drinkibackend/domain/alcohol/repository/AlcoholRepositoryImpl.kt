@@ -1,6 +1,8 @@
 package io.github.ssudrinki.drinkibackend.domain.alcohol.repository
 
+import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.request.AlcoholSearchRequest
 import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholListItem
+import org.jetbrains.exposed.v1.core.statements.StatementBuilder.upsert
 import org.springframework.stereotype.Repository
 import schema.AlcoholCategories
 import schema.AlcoholLocations
@@ -11,8 +13,11 @@ import schema.Alcohols
 class AlcoholRepositoryImpl : AlcoholRepository {
     override fun searchAlcohols(query: String, page: Int, size: Int, sort: String,
                                 category: String, location: String, style: String,
-                                priceMin: Int, priceMax: Int, rating: Double
+                                priceMin: Int, priceMax: Int, rating: Double // AlcoholSearchRequest
     ): List<AlcoholListItem> {
+
+        // EXPOSED
+
 
         return TODO("Provide the return value");
     }
