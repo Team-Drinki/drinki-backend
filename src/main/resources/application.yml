@@ -8,7 +8,8 @@ spring:
           google:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
-            scope: profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: email, profile
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
@@ -22,3 +23,13 @@ client:
   url: http://localhost:3000
 
 logging.level.org.springframework.security.web.FilterChainProxy: DEBUG
+logging:
+  level:
+    org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter: DEBUG
+    org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository: DEBUG
+    org:
+      springframework:
+        security:
+          oauth2:
+            client:
+              web: DEBUG

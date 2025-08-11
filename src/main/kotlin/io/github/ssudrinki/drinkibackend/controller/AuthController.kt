@@ -19,16 +19,15 @@ class AuthController (private val jwt: JwtProvider) {
      * 구글 로그인 API
      */
     @PostMapping("/login/google")
-    fun loginGoogle(response: HttpServletResponse) {
-        response.status = HttpStatus.FOUND.value()
-        response.setHeader("Location", "/oauth2/authorization/google")
+    fun loginGoogle(): String {
+        return "redirect:/oauth2/authorization/google"
     }
 
     /**
      * 리프레시 토큰 발급 API
      */
     @PostMapping("/refresh")
-    fun createRefreshToken(
+    fun createRefreshToken (
         request: HttpServletRequest,
         response: HttpServletResponse,
     ): ResponseEntity<Map<String, String>> {
@@ -43,6 +42,7 @@ class AuthController (private val jwt: JwtProvider) {
         val newAccessToken = jwt.createAccessToken(userId)
         val newRefreshToken = jwt.createRefreshToken(userId)
 
+        // TODO : 리프레시 토큰은 재발급하지 않고, 기존 토큰을 그대로 사용
         val cookie = ResponseCookie.from("refreshToken", newRefreshToken)
             .httpOnly(true).secure(true).sameSite("None")
             .path("/").maxAge(Duration.ofDays(14))
