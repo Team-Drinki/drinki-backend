@@ -59,6 +59,10 @@ allOpen {
 	annotation("jakarta.persistence.Embeddable")
 }
 
+springBoot {
+	mainClass.set("io.github.teamdrinki.drinkibackend.DrinkibackendApplicationKt")
+}
+
 flyway {
 	url = System.getenv("DB_URL")
 	user = System.getenv("DB_USER")
