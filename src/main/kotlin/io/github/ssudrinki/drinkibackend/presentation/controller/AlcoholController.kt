@@ -1,6 +1,7 @@
 package io.github.ssudrinki.drinkibackend.presentation.controller
 
 import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.request.AlcoholSearchRequest
+import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholDetailResponse
 import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholListResponse
 import io.github.ssudrinki.drinkibackend.domain.alcohol.service.AlcoholService
 import jakarta.validation.Valid
@@ -14,14 +15,21 @@ class AlcoholController(
 ) {
 
     @GetMapping("/search")
-    fun searchAlcohols(
+    fun getAlcoholList(
             @Valid request: AlcoholSearchRequest
     ): ResponseEntity<AlcoholListResponse> {
         val response = alcoholService.searchAlcohols(request)
         return ResponseEntity.ok(response)
     }
 
-
+    @GetMapping("/{id}")
+    fun getAlcohol(
+            @PathVariable id: Int
+    ): ResponseEntity<AlcoholDetailResponse>{
+        val response = alcoholService.getAlcoholDetail(id)
+        return ResponseEntity.ok(response)
+    }
 
 
 }
+
