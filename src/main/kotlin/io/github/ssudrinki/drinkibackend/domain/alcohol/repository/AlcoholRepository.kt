@@ -1,6 +1,7 @@
 package io.github.ssudrinki.drinkibackend.domain.alcohol.repository
 
 import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholListItem
+import schema.Alcohols
 
 interface AlcoholRepository {
 
@@ -23,7 +24,8 @@ interface AlcoholRepository {
                        category: String, location: String, style: String,
                        priceMin: Int, priceMax: Int, rating: Double // AlcoholSearchRequest
     ): List<AlcoholListItem>
-//    fun findById(id: Int): ResultRow?
+
+    fun findById(id: Int): Alcohols
 //    fun create(name: String, proof: Short, categoryId: Int, styleId: Int, locationId: Int,
 //               content: String?, price: BigDecimal?, imageUrl: String?): Int
 //    fun update(id: Int, name: String?, proof: Short?, content: String?): Boolean

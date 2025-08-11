@@ -1,6 +1,7 @@
 package io.github.ssudrinki.drinkibackend.domain.alcohol.service
 
 import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.request.AlcoholSearchRequest
+import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholDetailResponse
 import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholListResponse
 import io.github.ssudrinki.drinkibackend.domain.alcohol.repository.AlcoholRepository
 import org.springframework.stereotype.Service
@@ -30,9 +31,13 @@ class AlcoholServiceImpl(
         )
     }
 
-//    override fun getAlcoholById(id: Int): AlcoholDetailResponse? {
-//        TODO("Not yet implemented")
-//    }
+    override fun getAlcoholDetail(id: Int): AlcoholDetailResponse {
+        val alcohol = alcoholRepository.findById(id);   // 술 정보 조회
+
+        return AlcoholDetailResponse(
+
+        )
+    }
 //
 //    override fun createAlcohol(request: AlcoholCreateRequest): Int {
 //        TODO("Not yet implemented")
