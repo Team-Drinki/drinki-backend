@@ -1,0 +1,31 @@
+services:
+  backend:
+    image: openjdk:21-jdk-slim
+    container_name: drinki-kotlin-spring-backend
+    working_dir: /app
+    volumes:
+      - ./build/libs:/app
+    command: ["java", "-jar", "drinkibackend.jar"]
+    environment:
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+volumes:
+  dbdata:

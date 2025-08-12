@@ -1,4 +1,4 @@
-package schema
+package io.github.teamdrinki.drinkibackend.schema
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
