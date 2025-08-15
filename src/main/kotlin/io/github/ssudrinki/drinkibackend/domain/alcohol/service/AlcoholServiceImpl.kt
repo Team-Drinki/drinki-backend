@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional
 class AlcoholServiceImpl(
         private val alcoholRepository: AlcoholRepository
 ) : AlcoholService {
-    override fun searchAlcohols(request: AlcoholSearchRequest): AlcoholListResponse {
+
+
+    override fun searchAlcohols(alcoholSearchRequest: AlcoholSearchRequest): AlcoholListResponse {
         val alcohols = alcoholRepository.searchAlcohols(
                 page = request.page,
                 size = request.size,
@@ -31,14 +33,23 @@ class AlcoholServiceImpl(
         )
     }
 
-    override fun getAlcoholDetail(id: Int): AlcoholDetailResponse {
-        val alcohol = alcoholRepository.findById(id);   // 술 정보 조회
+    override fun getAlcoholDetail(alcoholId: Int): AlcoholDetailResponse {
+        val alcohol = alcoholRepository.findById(alcoholId);   // 술 정보 조회
 
         return AlcoholDetailResponse(
 
         )
     }
 //
+    override fun addWish(alcoholId: Int) {
+        //val currentUser = getCurrentUser()    // 사용자 획인
+        val existingWish  = wishRepository.findByUserIdAndAlcoholId( // 이미 위시되어 있는지 확인
+                userId, alcoholId
+        )
+    override fun removeWish(alcoholId: Int) {
+        //val currentUser = getCurrentUser()    // 사용자 획인
+        val existingWish = wishRepository.findByUserIdAndAlcoholId(currentUser.id, alcoholId)
+                ?: throw WishNotFoundException("위시리스트에 없는 술입니다.")
 //    override fun createAlcohol(request: AlcoholCreateRequest): Int {
 //        TODO("Not yet implemented")
 //    }
