@@ -1,10 +1,15 @@
 package io.github.teamdrinki.drinkibackend.schema
 
 import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.datetime.datetime
 
-object Alcohols : Table("Alcohols") {
-    val id = integer("id").autoIncrement()
+/**
+ * 술 정보를 저장하는 Table
+ *
+ * Exposed DAO 패천을 사용합니다.
+ */
+object Alcohols : IntIdTable("Alcohols") {
     val tastingNoteId = reference("tasting_note_id", TastingNotes.id)
     val userId = reference("user_id", Users.id)
     val name = varchar("name", 255)
@@ -18,6 +23,4 @@ object Alcohols : Table("Alcohols") {
     val rating = decimal("rating", 5, 2)
     val createdAt = datetime("created_at")
     val updatedAt = datetime("updated_at")
-
-    override val primaryKey = PrimaryKey(id)
 }
