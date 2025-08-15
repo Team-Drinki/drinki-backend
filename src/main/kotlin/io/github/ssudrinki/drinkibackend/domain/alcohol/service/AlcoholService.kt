@@ -5,8 +5,12 @@ import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholDeta
 import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholListResponse
 
 interface AlcoholService {
-    fun searchAlcohols(request: AlcoholSearchRequest): AlcoholListResponse                    // 술 리스트 검색
-    fun getAlcoholDetail(id: Int): AlcoholDetailResponse                                      // 술 상세 정보 조회
+
+    /**
+    fun searchAlcohols(alcoholSearchRequest: AlcoholSearchRequest): AlcoholListResponse
+    fun getAlcoholDetail(alcoholId: Int): AlcoholDetailResponse
+    fun addWish(alcoholId: Int)
+    fun removeWish(alcoholId: Int)
 //    fun getAlcoholById(id: Int): AlcoholDetailResponse?                                     //
 //    fun createAlcohol(request: AlcoholCreateRequest): Int                                   // 새로운 술 등록
 //    fun updateAlcohol(id: Int, name: String?, proof: Short?, content: String?): Boolean     // 술 수정
