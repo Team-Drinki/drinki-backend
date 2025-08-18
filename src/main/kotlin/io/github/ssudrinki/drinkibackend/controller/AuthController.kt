@@ -3,6 +3,7 @@ package io.github.ssudrinki.drinkibackend.controller
 import io.github.ssudrinki.drinkibackend.auth.JwtProvider
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseCookie
 import org.springframework.http.ResponseEntity
@@ -24,32 +25,32 @@ class AuthController (private val jwt: JwtProvider) {
     }
 
     /**
-     * 리프레시 토큰 발급 API
+     * 리프레시 토큰을 사용하여 새로운 액세스 토큰을 발급하는 API
      */
     @PostMapping("/refresh")
-    fun createRefreshToken (
+    fun refreshAccessToken (
         request: HttpServletRequest,
         response: HttpServletResponse,
-    ): ResponseEntity<Map<String, String>> {
+    ): ResponseEntity<Void> {
         val refreshCookie = request.cookies?.firstOrNull { it.name == "refreshToken" }
             ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
 
-        val refresh = refreshCookie.value
+        val refreshToken = refreshCookie.value
 
-        val userId = runCatching { jwt.verifyToken(refresh).subject.toLong() }
+        val userId = runCatching { jwt.verifyToken(refreshToken).subject.toLong() }
             .getOrElse { return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build() }
 
         val newAccessToken = jwt.createAccessToken(userId)
-        val newRefreshToken = jwt.createRefreshToken(userId)
 
-        // TODO : 리프레시 토큰은 재발급하지 않고, 기존 토큰을 그대로 사용
-        val cookie = ResponseCookie.from("refreshToken", newRefreshToken)
+        val accessCookie = ResponseCookie
+            .from("accessToken", newAccessToken)
             .httpOnly(true).secure(true).sameSite("None")
-            .path("/").maxAge(Duration.ofDays(14))
+            .path("/").maxAge(Duration.ofMinutes(10))  // 1시간
             .build()
-        response.addHeader("Set-Cookie", cookie.toString())
 
-        return ResponseEntity.ok(mapOf("accessToken" to newAccessToken))
+        response.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString())
+
+        return ResponseEntity.status(HttpStatus.OK).build()
     }
 
     /**
@@ -71,8 +72,8 @@ class AuthController (private val jwt: JwtProvider) {
             .build()
             .toString()
 
-        response.addHeader("Set-Cookie", expireRefreshCookie)
-        response.addHeader("Set-Cookie", expireAccessCookie)
+        response.addHeader(HttpHeaders.SET_COOKIE, expireRefreshCookie)
+        response.addHeader(HttpHeaders.SET_COOKIE, expireAccessCookie)
         response.status = HttpStatus.NO_CONTENT.value()
     }
 }

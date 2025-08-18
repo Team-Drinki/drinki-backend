@@ -37,7 +37,7 @@ class GoogleAuthSuccessHandler (
         val accessCookie = ResponseCookie
             .from("accessToken", accessToken)
             .httpOnly(true).secure(true).sameSite("None")
-            .path("/").maxAge(Duration.ofHours(1))  // 1시간
+            .path("/").maxAge(Duration.ofMinutes(10))  // 1시간
             .build()
 
         val refreshCookie = ResponseCookie
