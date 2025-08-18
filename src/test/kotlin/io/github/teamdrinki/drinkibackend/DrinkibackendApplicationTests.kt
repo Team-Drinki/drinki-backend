@@ -1,6 +1,6 @@
 package io.github.teamdrinki.drinkibackend
 
-import io.github.ssudrinki.drinkibackend.auth.JwtProvider
+import io.github.ssudrinki.drinkibackend.domain.auth.config.JwtProvider
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import java.time.Duration

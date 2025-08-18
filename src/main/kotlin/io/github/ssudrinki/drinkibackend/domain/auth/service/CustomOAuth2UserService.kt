@@ -1,4 +1,4 @@
-package io.github.ssudrinki.drinkibackend.service
+package io.github.ssudrinki.drinkibackend.domain.auth.service
 
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
@@ -11,7 +11,8 @@ import schema.UserRole
 import schema.Users
 
 @Service
-class CustomOAuth2UserService() : OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+class CustomOAuth2UserService(
+) : OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private val delegate = DefaultOAuth2UserService()
 
     override fun loadUser(request: OAuth2UserRequest): OAuth2User {
@@ -24,15 +25,15 @@ class CustomOAuth2UserService() : OAuth2UserService<OAuth2UserRequest, OAuth2Use
 
         transaction {
             val user = UserEntity
-                        .find { Users.socialId eq socialId }
-                        .singleOrNull()
+                .find { Users.socialId eq socialId }
+                .singleOrNull()
                 ?: UserEntity.new {
                     this.socialType = socialType
-                    this.socialId   = socialId
+                    this.socialId = socialId
                     this.nickname = "unknown"
                     this.role = UserRole.USER.name
                     this.isDeleted = false
-            }
+                }
         }
 
         return oauthUser

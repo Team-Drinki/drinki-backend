@@ -1,4 +1,4 @@
-package io.github.ssudrinki.drinkibackend.auth
+package io.github.ssudrinki.drinkibackend.domain.auth.config
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
@@ -16,13 +16,13 @@ class JwtProvider (
     @Value("\${spring.jwt.refresh-exp}") private val refreshExp: Duration? = null) {
     private val algorithm = Algorithm.HMAC256(secret)
 
-    fun createAccessToken(userId: Long) =
+    fun createAccessToken(userId: Long): String =
         JWT.create()
             .withSubject(userId.toString())
             .withExpiresAt(Date.from(Instant.now().plus(accessExp ?: Duration.ZERO)))
             .sign(algorithm)
 
-    fun createRefreshToken(userId: Long) =
+    fun createRefreshToken(userId: Long): String =
         JWT.create()
             .withSubject(userId.toString())
             .withExpiresAt(Date.from(Instant.now().plus(refreshExp ?: Duration.ZERO)))

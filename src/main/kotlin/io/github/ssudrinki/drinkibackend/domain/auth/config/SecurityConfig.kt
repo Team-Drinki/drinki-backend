@@ -1,8 +1,5 @@
-package io.github.ssudrinki.drinkibackend.config
+package io.github.ssudrinki.drinkibackend.domain.auth.config
 
-import io.github.ssudrinki.drinkibackend.auth.GoogleAuthSuccessHandler
-import io.github.ssudrinki.drinkibackend.auth.JwtAuthFilter
-import io.github.ssudrinki.drinkibackend.auth.JwtProvider
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -37,9 +34,7 @@ class SecurityConfig (
 
             authorizeHttpRequests {
                 authorize("/", permitAll)
-                authorize("/api/v1/auth/login/**", permitAll)
-                authorize("/api/v1/auth/refresh", permitAll)
-                authorize("/api/v1/auth/logout", permitAll)
+                authorize("/api/v1/auth/**", permitAll)
                 authorize(anyRequest, authenticated)
 
                 // 백엔드 API 테스트용

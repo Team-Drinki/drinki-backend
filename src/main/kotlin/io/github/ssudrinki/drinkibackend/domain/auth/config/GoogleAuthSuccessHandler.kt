@@ -1,4 +1,4 @@
-package io.github.ssudrinki.drinkibackend.auth
+package io.github.ssudrinki.drinkibackend.domain.auth.config
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
