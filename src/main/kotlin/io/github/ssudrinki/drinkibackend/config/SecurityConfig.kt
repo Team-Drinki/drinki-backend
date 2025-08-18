@@ -36,9 +36,10 @@ class SecurityConfig (
             cors { configurationSource = corsConfigurationSource() }
 
             authorizeHttpRequests {
-                authorize("/auth/login/**", permitAll)
-                authorize("/auth/refresh", permitAll)
-                authorize("/auth/logout", permitAll)
+                authorize("/", permitAll)
+                authorize("/api/v1/auth/login/**", permitAll)
+                authorize("/api/v1/auth/refresh", permitAll)
+                authorize("/api/v1/auth/logout", permitAll)
                 authorize(anyRequest, authenticated)
 
                 // 백엔드 API 테스트용
