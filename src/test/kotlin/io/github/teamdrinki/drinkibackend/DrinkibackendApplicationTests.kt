@@ -1,4 +1,4 @@
-package io.github.ssudrinki.drinkibackend
+package io.github.teamdrinki.drinkibackend
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

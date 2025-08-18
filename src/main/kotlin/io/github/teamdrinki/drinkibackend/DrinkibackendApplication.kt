@@ -1,4 +1,4 @@
-package io.github.ssudrinki.drinkibackend
+package io.github.teamdrinki.drinkibackend
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

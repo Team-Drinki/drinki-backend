@@ -1,14 +1,15 @@
-package schema
+package io.github.teamdrinki.drinkibackend.schema
 
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.datetime.datetime
 
-object Inquiries : Table("inquiries") {
+enum class AdminPostType { NOTICE, FAQ }
+
+object AdminPosts : Table("admin_posts") {
     val id = long("id").autoIncrement()
     val title = varchar("title", 100)
     val content = text("content")
-    val answer = text("answer").nullable()
-    val isSecret = char("is_secret", 1)
+    val postType = varchar("post_type", 20) // or: enumerationByName("post_type", 20, AdminPostType::class)
     val createdAt = datetime("created_at")
     val updatedAt = datetime("updated_at")
     val writer = reference("writer", Users.id)

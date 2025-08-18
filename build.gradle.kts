@@ -1,9 +1,19 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
 	alias(libs.plugins.kotlin.jvm)
 	alias(libs.plugins.kotlin.serialization)
 	alias(libs.plugins.kotlin.spring)
 	alias(libs.plugins.spring.boot)
 	alias(libs.plugins.spring.dependency.management)
+	alias(libs.plugins.flyway)
+}
+
+buildscript {
+	dependencies {
+		classpath(libs.flyway.database.postgresql)
+		classpath(libs.postgresql)
+	}
 }
 
 group = "io.github.ssudrinki"
@@ -30,8 +40,11 @@ dependencies {
 	implementation(libs.exposed.spring.boot.starter)
 	implementation(libs.exposed.kotlin.datetime)
 	implementation(libs.exposed.json)
+	implementation(libs.exposed.migration)
+	implementation(libs.exposed.jdbc)
 //	implementation(libs.jackson.module.kotlin)
-	runtimeOnly(libs.h2)
+	runtimeOnly(libs.postgresql)
+	developmentOnly(libs.flyway.database.postgresql)
 }
 
 kotlin {
@@ -46,6 +59,28 @@ allOpen {
 	annotation("jakarta.persistence.Embeddable")
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+springBoot {
+	mainClass.set("io.github.teamdrinki.drinkibackend.DrinkibackendApplicationKt")
+}
+
+flyway {
+	url = System.getenv("DB_URL")
+	user = System.getenv("DB_USER")
+	password = System.getenv("DB_PASSWORD")
+	locations = arrayOf("filesystem:src/main/resources/db/migration")
+}
+
+//tasks.withType<Test> {
+//	useJUnitPlatform()
+//}
+
+tasks.named<BootJar>("bootJar") {
+	archiveFileName = "${rootProject.name}.jar"
+}
+
+tasks.register<JavaExec>("generateMigration") {
+	group = "database"
+	description = "Generate Migration SQL"
+	classpath = sourceSets["main"].runtimeClasspath
+	mainClass.set("io.github.teamdrinki.drinkibackend.devops.MigrationScriptGeneratorKt")
 }
