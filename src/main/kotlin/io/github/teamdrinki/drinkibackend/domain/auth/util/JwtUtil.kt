@@ -1,4 +1,4 @@
-package io.github.ssudrinki.drinkibackend.domain.auth.util
+package io.github.teamdrinki.drinkibackend.domain.auth.util
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm

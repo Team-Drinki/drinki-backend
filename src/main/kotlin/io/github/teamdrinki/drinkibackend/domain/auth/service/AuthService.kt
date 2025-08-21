@@ -1,8 +1,8 @@
-package io.github.ssudrinki.drinkibackend.domain.auth.service
+package io.github.teamdrinki.drinkibackend.domain.auth.service
 
-import io.github.ssudrinki.drinkibackend.domain.auth.util.AuthCookieFactory
-import io.github.ssudrinki.drinkibackend.domain.auth.util.JwtUtil
-import io.github.ssudrinki.drinkibackend.common.util.addCookies
+import io.github.teamdrinki.drinkibackend.domain.auth.util.AuthCookieFactory
+import io.github.teamdrinki.drinkibackend.domain.auth.util.JwtUtil
+import io.github.teamdrinki.drinkibackend.common.util.addCookies
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

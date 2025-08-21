@@ -1,9 +1,7 @@
-package io.github.ssudrinki.drinkibackend.presentation.controller
+package io.github.teamdrinki.drinkibackend.presentation.controller
 
-import io.github.ssudrinki.drinkibackend.domain.auth.service.AuthService
+import io.github.teamdrinki.drinkibackend.domain.auth.service.AuthService
 import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping

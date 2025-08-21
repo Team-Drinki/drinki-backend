@@ -1,8 +1,8 @@
-package io.github.ssudrinki.drinkibackend.presentation.config
+package io.github.teamdrinki.drinkibackend.presentation.config
 
-import io.github.ssudrinki.drinkibackend.domain.auth.config.GoogleAuthSuccessHandler
-import io.github.ssudrinki.drinkibackend.domain.auth.config.JwtAuthFilter
-import io.github.ssudrinki.drinkibackend.domain.auth.util.JwtUtil
+import io.github.teamdrinki.drinkibackend.domain.auth.config.GoogleAuthSuccessHandler
+import io.github.teamdrinki.drinkibackend.domain.auth.config.JwtAuthFilter
+import io.github.teamdrinki.drinkibackend.domain.auth.util.JwtUtil
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

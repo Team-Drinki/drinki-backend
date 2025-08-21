@@ -1,8 +1,10 @@
-package io.github.ssudrinki.drinkibackend.domain.auth.config
+package io.github.teamdrinki.drinkibackend.domain.auth.config
 
-import io.github.ssudrinki.drinkibackend.common.util.addCookies
-import io.github.ssudrinki.drinkibackend.domain.auth.util.AuthCookieFactory
-import io.github.ssudrinki.drinkibackend.domain.auth.util.JwtUtil
+import io.github.teamdrinki.drinkibackend.common.util.addCookies
+import io.github.teamdrinki.drinkibackend.domain.auth.util.AuthCookieFactory
+import io.github.teamdrinki.drinkibackend.domain.auth.util.JwtUtil
+import io.github.teamdrinki.drinkibackend.schema.UserEntity
+import io.github.teamdrinki.drinkibackend.schema.Users
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
@@ -11,8 +13,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.stereotype.Component
-import schema.UserEntity
-import schema.Users
+
 
 @Component
 class GoogleAuthSuccessHandler (

@@ -1,14 +1,14 @@
-package io.github.ssudrinki.drinkibackend.domain.auth.service
+package io.github.teamdrinki.drinkibackend.domain.auth.service
 
+import io.github.teamdrinki.drinkibackend.schema.UserEntity
+import io.github.teamdrinki.drinkibackend.schema.UserRole
+import io.github.teamdrinki.drinkibackend.schema.Users
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Service
-import schema.UserEntity
-import schema.UserRole
-import schema.Users
 
 @Service
 class CustomOAuth2UserService(

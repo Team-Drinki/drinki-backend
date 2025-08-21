@@ -1,4 +1,4 @@
-package io.github.ssudrinki.drinkibackend.domain.auth.util
+package io.github.teamdrinki.drinkibackend.domain.auth.util
 
 import org.springframework.http.ResponseCookie
 import java.time.Duration

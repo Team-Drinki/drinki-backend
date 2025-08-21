@@ -1,4 +1,4 @@
-package io.github.ssudrinki.drinkibackend.common.util
+package io.github.teamdrinki.drinkibackend.common.util
 
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpHeaders
