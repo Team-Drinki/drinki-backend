@@ -1,17 +1,16 @@
 package io.github.ssudrinki.drinkibackend.domain.auth.service
 
-import io.github.ssudrinki.drinkibackend.domain.auth.config.JwtProvider
+import io.github.ssudrinki.drinkibackend.domain.auth.util.AuthCookieFactory
+import io.github.ssudrinki.drinkibackend.domain.auth.util.JwtUtil
+import io.github.ssudrinki.drinkibackend.common.util.addCookies
 import jakarta.servlet.http.HttpServletRequest
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseCookie
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import java.time.Duration
 
 @Service
 class AuthService(
-    private val jwt: JwtProvider
+    private val jwt: JwtUtil
 ) {
     fun refreshAccessToken(
         request: HttpServletRequest,
@@ -26,44 +25,20 @@ class AuthService(
 
         val newAccessToken = jwt.createAccessToken(userId)
 
-        val accessCookie = ResponseCookie
-            .from("accessToken", newAccessToken)
-            .httpOnly(true).secure(true).sameSite("None")
-            .path("/").maxAge(Duration.ofMinutes(10))  // 1시간
-            .build()
-            .toString()
-
-        val refreshCookieOut = ResponseCookie
-            .from("refreshToken", refreshToken)
-            .httpOnly(true).secure(true).sameSite("None")
-            .path("/").maxAge(Duration.ofDays(14))
-            .build()
-            .toString()
+        val accessCookie = AuthCookieFactory.access(newAccessToken)
+        val refreshCookieOut = AuthCookieFactory.refresh(refreshToken)
 
         return ResponseEntity.noContent()
-            .header(HttpHeaders.SET_COOKIE, accessCookie)
-            .header(HttpHeaders.SET_COOKIE, refreshCookieOut)
+            .addCookies(accessCookie, refreshCookieOut)
             .build()
     }
 
     fun logout(): ResponseEntity<Void> {
-        val expireAccessCookie = ResponseCookie
-            .from("accessToken", "")
-            .httpOnly(true).secure(true).sameSite("None")
-            .path("/").maxAge(0)
-            .build()
-            .toString()
-
-        val expireRefreshCookie = ResponseCookie
-            .from("refreshToken", "")
-            .httpOnly(true).secure(true).sameSite("None")
-            .path("/").maxAge(0)
-            .build()
-            .toString()
+        val expiredAccessCookie = AuthCookieFactory.delete("accessToken")
+        val expiredRefreshCookie = AuthCookieFactory.delete("refreshToken")
 
         return ResponseEntity.noContent()
-            .header(HttpHeaders.SET_COOKIE, expireAccessCookie)
-            .header(HttpHeaders.SET_COOKIE, expireRefreshCookie)
+            .addCookies(expiredAccessCookie, expiredRefreshCookie)
             .build()
     }
 }

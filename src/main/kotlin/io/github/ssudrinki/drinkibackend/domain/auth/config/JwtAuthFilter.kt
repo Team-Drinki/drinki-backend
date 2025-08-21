@@ -1,5 +1,6 @@
 package io.github.ssudrinki.drinkibackend.domain.auth.config
 
+import io.github.ssudrinki.drinkibackend.domain.auth.util.JwtUtil
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -8,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 
 class JwtAuthFilter (
-    private val jwt: JwtProvider
+    private val jwt: JwtUtil
 ): OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,

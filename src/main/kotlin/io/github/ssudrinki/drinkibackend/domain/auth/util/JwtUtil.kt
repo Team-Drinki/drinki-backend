@@ -1,4 +1,4 @@
-package io.github.ssudrinki.drinkibackend.domain.auth.config
+package io.github.ssudrinki.drinkibackend.domain.auth.util
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
@@ -10,7 +10,7 @@ import java.time.Instant
 import java.util.Date
 
 @Component
-class JwtProvider (
+class JwtUtil (
     @Value("\${spring.jwt.secret}") private val secret: String? = null,
     @Value("\${spring.jwt.access-exp}") private val accessExp: Duration? = null,
     @Value("\${spring.jwt.refresh-exp}") private val refreshExp: Duration? = null) {
