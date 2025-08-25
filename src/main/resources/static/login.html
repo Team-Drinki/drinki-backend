@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Google Login Test</title>
+</head>
+<body>
+<h1>OAuth2 Demo</h1>
+
+<button id="loginBtn">Google Login</button>
+
+<pre id="result"></pre>
+
+<script>
+    document.getElementById("loginBtn").onclick = () => {
+        window.location.href = "/oauth2/authorization/google";
+    };
+    if (window.location.pathname === "/oauth2/success") {
+        const params = new URLSearchParams(location.search);
+        const access = params.get("accessToken");
+        if (access) {
+            sessionStorage.setItem("access", access);
+            fetch("/me", {
+                headers: { Authorization: `Bearer ${access}` },
+                credentials: "include"
+            })
+                .then(r => r.json())
+                .then(json => {
+                    document.getElementById("result").textContent =
+                        "로그인 성공 🎉\n" + JSON.stringify(json, null, 2);
+                });
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<title>Login Success</title>
+<body>
+<h2 id="title">Login Success 🎉</h2>
+<img id="avatar" style="width:80px;height:80px;border-radius:50%"><br>
+<strong id="name"></strong><br>
+<span id="email"></span>
+
+<script>
+    const qs   = new URLSearchParams(location.search);
+    sessionStorage.setItem("access", qs.get("accessToken"));
+    document.getElementById("name").textContent  = qs.get("name")  ?? "";
+    document.getElementById("email").textContent = qs.get("email") ?? "";
+    const pic = qs.get("picture");
+    if (pic) document.getElementById("avatar").src = pic;
+</script>
+</body>
