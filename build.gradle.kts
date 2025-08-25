@@ -37,7 +37,7 @@ dependencies {
     testRuntimeOnly(libs.junit.platform.launcher)
 
 	runtimeOnly(libs.postgresql)
-    implementation(libs.flyway.core)
+//    implementation(libs.flyway.core)
     implementation(libs.flyway.database.postgresql)
     testImplementation(libs.kotlin.test.junit5)
     testRuntimeOnly(libs.junit.platform.launcher)
