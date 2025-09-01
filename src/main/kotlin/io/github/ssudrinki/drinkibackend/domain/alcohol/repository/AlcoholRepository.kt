@@ -1,9 +1,33 @@
 package io.github.ssudrinki.drinkibackend.domain.alcohol.repository
 
+import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholDetailResponse
 import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholListItem
+import io.github.ssudrinki.drinkibackend.domain.alcohol.entity.AlcoholEntity
 import schema.Alcohols
 
+/**
+ * 술 정보를 관리하는 Repository 인터페이스
+ *
+ * 이 인터페이스는 술 엔티티에 대한 CRUD 작업과
+ * 검색, 필터링 기능을 제공합니다.
+ */
 interface AlcoholRepository {
+
+    /**
+     * 검색 조건에 맞는 술 목록을 조회합니다.
+     *
+     * @param alcoholId 조회할 술의 고유 식별자
+     * @return 술 상세 정보
+     */
+    fun findById(alcoholId: Int): AlcoholEntity
+
+    /**
+     * 해당 술에 대한 상세 페이지에 필요한 정보를 조회합니다.
+     *
+     * @param alcoholId 조회할 술의 고유 식별자
+     * @return 술 상세 페이지 정보
+     */
+    fun findByIdWithDetails(alcoholId: Int): AlcoholDetailResponse
 
     /**
      * 검색 조건에 맞는 술 목록을 조회합니다.
@@ -20,12 +44,13 @@ interface AlcoholRepository {
      * @param rating 최소 평점
      * @return 검색된 술 목록
      */
-    fun searchAlcohols(query: String, page: Int, size: Int, sort: String,
-                       category: String, location: String, style: String,
-                       priceMin: Int, priceMax: Int, rating: Double // AlcoholSearchRequest
-    ): List<AlcoholListItem>
+//    fun searchAlcohols(query: String, page: Int, size: Int, sort: String,
+//                       category: String, location: String, style: String,
+//                       priceMin: Int, priceMax: Int, rating: Double // AlcoholSearchRequest
+//    ): List<AlcoholListItem>
+//
+//
 
-    fun findById(id: Int): Alcohols
 //    fun create(name: String, proof: Short, categoryId: Int, styleId: Int, locationId: Int,
 //               content: String?, price: BigDecimal?, imageUrl: String?): Int
 //    fun update(id: Int, name: String?, proof: Short?, content: String?): Boolean
