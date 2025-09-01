@@ -4,28 +4,29 @@ import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.request.AlcoholSearc
 import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholDetailResponse
 import io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response.AlcoholListResponse
 import io.github.ssudrinki.drinkibackend.domain.alcohol.repository.AlcoholRepository
+import io.github.ssudrinki.drinkibackend.domain.alcohol.repository.WishRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
 class AlcoholServiceImpl(
-        private val alcoholRepository: AlcoholRepository
+        private val alcoholRepository: AlcoholRepository,
+        private val wishRepository: WishRepository
 ) : AlcoholService {
-
 
     override fun searchAlcohols(alcoholSearchRequest: AlcoholSearchRequest): AlcoholListResponse {
         val alcohols = alcoholRepository.searchAlcohols(
-                page = request.page,
-                size = request.size,
-                sort = request.sort,
-                query = request.query,
-                category = request.category,
-                location = request.location,
-                style = request.style,
-                priceMin = request.priceMin,
-                priceMax = request.priceMax,
-                rating = request.rating
+                page = alcoholSearchRequest.page,
+                size = alcoholSearchRequest.size,
+                sort = alcoholSearchRequest.sort,
+                query = alcoholSearchRequest.query,
+                category = alcoholSearchRequest.category,
+                location = alcoholSearchRequest.location,
+                style = alcoholSearchRequest.style,
+                priceMin = alcoholSearchRequest.priceMin,
+                priceMax = alcoholSearchRequest.priceMax,
+                rating = alcoholSearchRequest.rating
         )
 
         return AlcoholListResponse(
@@ -34,22 +35,27 @@ class AlcoholServiceImpl(
     }
 
     override fun getAlcoholDetail(alcoholId: Int): AlcoholDetailResponse {
-        val alcohol = alcoholRepository.findById(alcoholId);   // 술 정보 조회
+        val alcohol = alcoholRepository.findById(alcoholId);   // 술 상세 정보 조회
 
         return AlcoholDetailResponse(
-
+                id = alcohol.id.value,
+                name = alcohol.name,
+                proof = alcohol.proof,
+                image = alcohol.imageUrl,
+                category = alcohol.category,
+                location = alcohol.location,
+                style = alcohol.style,
+                description = alcohol.description,
+                wish = alcohol.wishCount,
+                rating = alcohol.averageRating,
+                isWished = checkUserWish(alcoholId),
+                bestNotes = getBestNotes(alcoholId),
+                recommendAlcohols = getRecommendations(alcoholId)
         )
     }
-//
-    override fun addWish(alcoholId: Int) {
-        //val currentUser = getCurrentUser()    // 사용자 획인
-        val existingWish  = wishRepository.findByUserIdAndAlcoholId( // 이미 위시되어 있는지 확인
-                userId, alcoholId
-        )
-    override fun removeWish(alcoholId: Int) {
-        //val currentUser = getCurrentUser()    // 사용자 획인
-        val existingWish = wishRepository.findByUserIdAndAlcoholId(currentUser.id, alcoholId)
-                ?: throw WishNotFoundException("위시리스트에 없는 술입니다.")
+
+
+
 //    override fun createAlcohol(request: AlcoholCreateRequest): Int {
 //        TODO("Not yet implemented")
 //    }
