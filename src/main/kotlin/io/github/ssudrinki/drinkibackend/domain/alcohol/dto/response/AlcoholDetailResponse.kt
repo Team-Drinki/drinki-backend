@@ -1,5 +1,7 @@
 package io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response
 
+import io.github.ssudrinki.drinkibackend.domain.tastingnote.dto.response.TastingNotesListItem
+
 /**
  * 술 정보를 나타내는 응답
  *
@@ -21,18 +23,18 @@ package io.github.ssudrinki.drinkibackend.domain.alcohol.dto.response
  * @property recommendAlcohols 추천 술 목록. 현재 술과 유사하거나 관련된 추천 술들
  */
 data class AlcoholDetailResponse (
-    val id: Int,
-    val name: String,
-    val proof: Double,
-    val image: String?,
-    val category: String,
-    val location: String,
-    val style: String,
-    val description: String,
-    val wish: Int,
-    val rating: Double,
-    val isWished: Boolean,
+        val id: Int,
+        val name: String,
+        val proof: Float,
+        val image: String?,
+        val category: String,
+        val location: String,
+        val style: String,
+        val description: String,
+        val wish: Int,
+        val rating: Float,
+        val isWished: Boolean,
 
-    val bestNotes: List<TastingNotesListItem>,
-    val recommendAlcohols: List<AlcoholListItem>
+        val bestNotes: List<TastingNotesListItem>,
+        val recommendAlcohols: List<AlcoholListItem>
 )
