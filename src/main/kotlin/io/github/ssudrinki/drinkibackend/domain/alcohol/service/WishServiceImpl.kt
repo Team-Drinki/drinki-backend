@@ -13,10 +13,11 @@ class WishServiceImpl (
         //val currentUser = getCurrentUser()    // 사용자 획인
         val userId = 1;
 
-        val existingWish  = wishRepository.findByUserIdAndAlcoholId( // 이미 위시되어 있는지 확인
-                userId, alcoholId
-        )
+        val existingWish =
 
+        if(isWished(userId, alcoholId)){
+
+        }
 
         wishRepository.create(currentUser.id, alcoholId)
 
@@ -32,7 +33,16 @@ class WishServiceImpl (
         wishRepository.delete(existingWish)
 
     }
-    override fun isWished(alcoholId: Int, userId: Int?) {
+
+    override fun isWished(userId: Long, alcoholId: Int): Boolean {
+        val wishDto = wishRepository.findByUserIdAndAlcoholId( // 이미 위시되어 있는지 확인
+                userId, alcoholId
+        )
+
+        return (wishDto != null)                               // null 이 아니면 true, null 이면 false
+    }
+
+    override fun getWishList(alcoholId: Int, userId: Int) {
         TODO("Not yet implemented")
     }
 }

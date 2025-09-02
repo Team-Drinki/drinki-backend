@@ -32,13 +32,12 @@ interface WishService {
     /**
      * 사용자의 위시리스트에 현재 술이 존재하는지 체크합니다.
      *
-     * 로그인 한 사용자라면 위시리스트를 체크하고, 로그인하지 않은 사용자라면 체크하지 않습니다
-     *
      * @param alcoholId 위시리스트에서 체크할 술의 ID
      * @param userId    체크할 유저의 ID
+     * @return true, false
      * @throws
      */
-    fun isWished(alcoholId: Int, userId: Int?)
+    fun isWished(userId: Long, alcoholId: Int): Boolean
 
     fun getWishList(alcoholId: Int, userId: Int)
 
