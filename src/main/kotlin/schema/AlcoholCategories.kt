@@ -1,6 +1,6 @@
 package schema
 
-import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.sql.Table
 
 object AlcoholCategories : Table("AlcoholCategories") {
     val id = integer("id").autoIncrement()
