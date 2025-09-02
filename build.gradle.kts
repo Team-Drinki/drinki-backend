@@ -37,15 +37,20 @@ dependencies {
 	developmentOnly(libs.spring.boot.devtools)
 	testImplementation(libs.kotlin.test.junit5)
 	testRuntimeOnly(libs.junit.platform.launcher)
+
 	implementation(libs.exposed.spring.boot.starter)
 	implementation(libs.exposed.kotlin.datetime)
 	implementation(libs.exposed.json)
 	implementation(libs.exposed.migration)
 	implementation(libs.exposed.jdbc)
+	implementation(libs.exposed.core)      // 추가
+	implementation(libs.exposed.dao)       // 추가
+	implementation(libs.exposed.jdbc)      // 추가
 //	implementation(libs.jackson.module.kotlin)
 	runtimeOnly(libs.postgresql)
 	developmentOnly(libs.flyway.database.postgresql)
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+
 }
 
 kotlin {

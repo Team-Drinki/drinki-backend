@@ -1,8 +1,7 @@
 package io.github.teamdrinki.drinkibackend.schema
 
-import org.jetbrains.exposed.v1.core.Table
-import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
-import org.jetbrains.exposed.v1.datetime.datetime
+import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 
 /**
  * 사용자의 술 위시리스트를 저장하는 Table
