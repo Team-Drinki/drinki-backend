@@ -1,6 +1,6 @@
 package io.github.teamdrinki.drinkibackend.schema
 
-import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.v1.core.Table
 
 object AlcoholCategories : Table("AlcoholCategories") {
     val id = integer("id").autoIncrement()

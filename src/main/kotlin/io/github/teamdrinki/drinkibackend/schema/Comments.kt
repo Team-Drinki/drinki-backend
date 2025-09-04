@@ -1,7 +1,7 @@
 package io.github.teamdrinki.drinkibackend.schema
 
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.kotlin.datetime.datetime
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.datetime.datetime
 
 enum class CommentTargetType { post, tasting_note, alcohol }
 

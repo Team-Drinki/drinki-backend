@@ -2,9 +2,9 @@ package io.github.teamdrinki.drinkibackend.schema
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.json.jsonb
-import org.jetbrains.exposed.sql.kotlin.datetime.datetime
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.datetime.datetime
+import org.jetbrains.exposed.v1.json.jsonb
 
 
 @Serializable
