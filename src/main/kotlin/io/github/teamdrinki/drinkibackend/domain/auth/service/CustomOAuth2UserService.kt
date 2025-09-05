@@ -10,11 +10,21 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Service
 
+/**
+ * OAuth2 사용자 정보를 처리하는 서비스 클래스입니다.
+ */
 @Service
 class CustomOAuth2UserService(
 ) : OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private val delegate = DefaultOAuth2UserService()
 
+    /**
+     * OAuth2 사용자 정보를 가져옵니다.
+     * 사용자가 존재하지 않으면 새로 생성합니다.
+     *
+     * @param request OAuth2 사용자 요청 정보
+     * @return OAuth2 사용자 정보
+     */
     override fun loadUser(request: OAuth2UserRequest): OAuth2User {
         val oauthUser = delegate.loadUser(request)
         val attrs     = oauthUser.attributes

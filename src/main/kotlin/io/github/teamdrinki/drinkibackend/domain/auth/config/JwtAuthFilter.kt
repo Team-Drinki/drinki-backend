@@ -8,9 +8,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 
+/**
+ * JWT 인증을 처리하는 필터 클래스입니다.
+ */
 class JwtAuthFilter (
     private val jwt: JwtUtil
 ): OncePerRequestFilter() {
+    /**
+     * 각 요청마다 JWT 토큰을 검사하고 인증을 처리합니다.
+     *
+     * @param request HTTP 요청 객체
+     * @param response HTTP 응답 객체
+     * @param filterChain 필터 체인 객체
+     */
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,

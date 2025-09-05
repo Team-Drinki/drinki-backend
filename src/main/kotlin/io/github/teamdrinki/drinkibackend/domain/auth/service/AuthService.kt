@@ -12,6 +12,14 @@ import org.springframework.stereotype.Service
 class AuthService(
     private val jwt: JwtUtil
 ) {
+    /**
+     * Access Token을 재발급합니다.
+     * 리프레시 토큰이 유효한 경우 새로운 액세스 토큰을 발급합니다.
+     * 새로 발급된 Access Token과 기존 Refresh Token을 쿠키에 담아 응답합니다.
+     *
+     * @param request HTTP 요청 객체
+     * @return HTTP 응답 객체 (204 No Content 또는 401 Unauthorized)
+     */
     fun refreshAccessToken(
         request: HttpServletRequest,
     ): ResponseEntity<Void> {
@@ -33,6 +41,12 @@ class AuthService(
             .build()
     }
 
+    /**
+     * 로그아웃 요청을 처리합니다.
+     * Access Token과 Refresh Token을 쿠키에서 삭제합니다.
+     *
+     * @return HTTP 응답 객체 (204 No Content)
+     */
     fun logout(): ResponseEntity<Void> {
         val expiredAccessCookie = AuthCookieFactory.delete("accessToken")
         val expiredRefreshCookie = AuthCookieFactory.delete("refreshToken")

@@ -16,6 +16,9 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
+/**
+ * Spring Security 설정 클래스입니다.
+ */
 @Configuration
 @EnableWebSecurity
 class SecurityConfig (
@@ -23,7 +26,6 @@ class SecurityConfig (
     private val successHandler: GoogleAuthSuccessHandler,
     @Value("\${client.url}") private val clientUrl: String
 ){
-
     @Bean
     fun jwtAuthFilter() = JwtAuthFilter(jwt)
 
