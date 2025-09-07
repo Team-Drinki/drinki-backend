@@ -4,6 +4,8 @@ import io.github.teamdrinki.drinkibackend.domain.auth.util.JwtUtil
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.slf4j.LoggerFactory
+import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
@@ -14,6 +16,8 @@ import org.springframework.web.filter.OncePerRequestFilter
 class JwtAuthFilter (
     private val jwt: JwtUtil
 ): OncePerRequestFilter() {
+    private val log = LoggerFactory.getLogger(javaClass)
+
     /**
      * 각 요청마다 JWT 토큰을 검사하고 인증을 처리합니다.
      *
@@ -26,13 +30,22 @@ class JwtAuthFilter (
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val bearer = request.getHeader("Authorization")
-        if (bearer == null || !bearer.startsWith("Bearer ")) {
+        log.debug("JwtAuthFilter invoked path={}", request.requestURI)
+        val header = request.getHeader(HttpHeaders.AUTHORIZATION)
+        val bearerToken = header
+            ?.takeIf { it.startsWith("Bearer ", ignoreCase = true) }
+            ?.removePrefix("Bearer ")
+            ?.trim()
+
+        val cookieToken = request.cookies
+            ?.firstOrNull { it.name == "accessToken" }
+            ?.value
+
+        val token = bearerToken ?: cookieToken
+        if (token.isNullOrBlank()) {
             filterChain.doFilter(request, response)
             return
         }
-
-        val token = bearer.removePrefix("Bearer ").trim()
 
         val decoded = runCatching { jwt.verifyToken(token) }
             .getOrElse {
