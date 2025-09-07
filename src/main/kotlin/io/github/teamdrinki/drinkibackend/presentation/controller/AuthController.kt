@@ -17,18 +17,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/auth")
 class AuthController (private val authService: AuthService, private val jwtUtil: JwtUtil) {
     /**
-     * 현재 인증된 사용자의 ID를 반환하는 API 엔드포인트입니다.
-     *
-     * @param auth 현재 인증된 사용자의 인증 정보
-     * @return 인증된 사용자의 ID
-     */
-    @GetMapping("/me")
-    fun me(auth: Authentication): Long {
-        val userId = auth.principal as Long
-        return userId
-    }
-
-    /**
      * 구글 OAuth2 로그인 요청을 처리하는 API 엔드포인트입니다.
      *
      * @return 구글 OAuth2 인증 페이지로 리다이렉트하는 URL
