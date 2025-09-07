@@ -3,8 +3,9 @@ package io.github.teamdrinki.drinkibackend.presentation.controller
 import io.github.teamdrinki.drinkibackend.domain.auth.service.AuthService
 import io.github.teamdrinki.drinkibackend.domain.auth.util.JwtUtil
 import jakarta.servlet.http.HttpServletRequest
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.Authentication
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -15,6 +16,18 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/auth")
 class AuthController (private val authService: AuthService, private val jwtUtil: JwtUtil) {
+    /**
+     * 현재 인증된 사용자의 ID를 반환하는 API 엔드포인트입니다.
+     *
+     * @param auth 현재 인증된 사용자의 인증 정보
+     * @return 인증된 사용자의 ID
+     */
+    @GetMapping("/me")
+    fun me(auth: Authentication): Long {
+        val userId = auth.principal as Long
+        return userId
+    }
+
     /**
      * 구글 OAuth2 로그인 요청을 처리하는 API 엔드포인트입니다.
      *
@@ -35,18 +48,6 @@ class AuthController (private val authService: AuthService, private val jwtUtil:
      */
     @PostMapping("/refresh")
     fun refresh (request: HttpServletRequest): ResponseEntity<Void> {
-        val refreshCookie = request.cookies?.firstOrNull { it.name == "refreshToken" }
-            ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-
-        val refreshToken = refreshCookie.value
-
-        val userId = runCatching { jwtUtil.verifyToken(refreshToken).subject.toLong() }
-            .getOrElse { return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build() }
-
-        println("refreshToken: $refreshToken")
-        println("userId from refreshToken: $userId")
-        val tok = jwtUtil.verifyToken(refreshToken).token
-        println("token: $tok")
         return authService.refreshAccessToken(request)
     }
 

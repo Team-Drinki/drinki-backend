@@ -55,4 +55,13 @@ class JwtUtil (
      */
     fun verifyToken(token: String): DecodedJWT =
         JWT.require(algorithm).build().verify(token)
+
+    /**
+     * 토큰에서 사용자 ID를 추출합니다.
+     *
+     * @param token 사용자 ID를 추출할 JWT 토큰 문자열
+     * @return 토큰에서 추출한 사용자 ID
+     */
+    fun getUserIdFromToken(token: String): Long =
+        verifyToken(token).subject.toLong()
 }

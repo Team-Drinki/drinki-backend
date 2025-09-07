@@ -41,7 +41,7 @@ class JwtAuthFilter (
                 return
             }
 
-        val userId = decoded.subject.toLong()
+        val userId = jwt.getUserIdFromToken(token)
         val auth = UsernamePasswordAuthenticationToken(userId, null, emptyList())
         SecurityContextHolder.getContext().authentication = auth
 

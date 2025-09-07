@@ -28,7 +28,7 @@ class AuthService(
 
         val refreshToken = refreshCookie.value
 
-        val userId = runCatching { jwt.verifyToken(refreshToken).subject.toLong() }
+        val userId = runCatching { jwt.getUserIdFromToken(refreshToken) }
             .getOrElse { return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build() }
 
         val newAccessToken = jwt.createAccessToken(userId)
