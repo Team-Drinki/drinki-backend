@@ -32,19 +32,36 @@ repositories {
 dependencies {
 	implementation(libs.kotlin.reflect)
 	implementation(libs.kotlinx.serialization.json)
-	implementation(libs.spring.boot.starter.web)
-	testImplementation(libs.spring.boot.starter.test)
-	developmentOnly(libs.spring.boot.devtools)
+
 	testImplementation(libs.kotlin.test.junit5)
-	testRuntimeOnly(libs.junit.platform.launcher)
-	implementation(libs.exposed.spring.boot.starter)
-	implementation(libs.exposed.kotlin.datetime)
-	implementation(libs.exposed.json)
-	implementation(libs.exposed.migration)
-	implementation(libs.exposed.jdbc)
-//	implementation(libs.jackson.module.kotlin)
+    testRuntimeOnly(libs.junit.platform.launcher)
+
 	runtimeOnly(libs.postgresql)
-	developmentOnly(libs.flyway.database.postgresql)
+//    implementation(libs.flyway.core)
+    implementation(libs.flyway.database.postgresql)
+    testImplementation(libs.kotlin.test.junit5)
+    testRuntimeOnly(libs.junit.platform.launcher)
+    implementation(libs.jackson.module.kotlin)
+    implementation(libs.auth0.jwt)
+
+    implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.data.jpa)
+    implementation(libs.spring.boot.starter.security)
+    implementation(libs.spring.boot.starter.oauth2.client)
+    developmentOnly(libs.spring.boot.devtools)
+    testImplementation(libs.spring.boot.starter.test)
+
+    implementation(libs.exposed.migration)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.spring.boot.starter)
+    implementation(libs.exposed.kotlin.datetime)
+    implementation(libs.exposed.json)
+
+    runtimeOnly(libs.postgresql)
+    implementation(libs.hikari)
+
 }
 
 kotlin {
