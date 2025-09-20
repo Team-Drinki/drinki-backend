@@ -45,12 +45,10 @@ dependencies {
 	implementation(libs.exposed.jdbc)
 	implementation(libs.exposed.core)      // 추가
 	implementation(libs.exposed.dao)       // 추가
-	implementation(libs.exposed.jdbc)      // 추가
 //	implementation(libs.jackson.module.kotlin)
 	runtimeOnly(libs.postgresql)
 	developmentOnly(libs.flyway.database.postgresql)
 	implementation("org.springframework.boot:spring-boot-starter-validation")
-
 }
 
 kotlin {
