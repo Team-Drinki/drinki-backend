@@ -1,10 +1,7 @@
 package io.github.teamdrinki.drinkibackend.schema
 
-import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 
-object AlcoholCategories : Table("AlcoholCategories") {
-    val id = integer("id").autoIncrement()
+object AlcoholCategories : IntIdTable("AlcoholCategories") {
     val name = varchar("name", 255)
-
-    override val primaryKey = PrimaryKey(id)
 }

@@ -2,10 +2,10 @@ package io.github.teamdrinki.drinkibackend.schema
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.json.jsonb
-import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.datetime.datetime
+import org.jetbrains.exposed.v1.json.jsonb
 
 
 @Serializable
@@ -13,8 +13,7 @@ data class Note(val name: String) // TODO: replace with real note format
 
 val format = Json { ignoreUnknownKeys = true; prettyPrint = true }
 
-object TastingNotes : Table("TastingNotes") {
-    val id = integer("id").autoIncrement()
+object TastingNotes : IntIdTable("TastingNotes") {
     val alcoholId = reference("alcohol_id", Alcohols.id)
     val userId = reference("user_id", Users.id)
     val commentId = reference("comment_id", Comments.id)
@@ -25,6 +24,4 @@ object TastingNotes : Table("TastingNotes") {
     val finishNote = jsonb<Note>("finish_note", format)
     val createdAt = datetime("created_at")
     val updatedAt = datetime("updated_at")
-
-    override val primaryKey = PrimaryKey(id)
 }
