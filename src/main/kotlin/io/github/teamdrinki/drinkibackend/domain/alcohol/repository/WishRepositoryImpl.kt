@@ -1,6 +1,6 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.repository
 
-import io.github.ssudrinki.drinkibackend.domain.alcohol.data.dao.WishDto
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.dao.WishDto
 import io.github.teamdrinki.drinkibackend.schema.Wishes
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone

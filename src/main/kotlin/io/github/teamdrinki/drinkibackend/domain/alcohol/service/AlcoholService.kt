@@ -38,12 +38,11 @@ interface AlcoholService {
     fun getAlcoholDetail(userId: Long, alcoholId: Int): AlcoholDetailResponse
 
     /**
-     * 특정 술을 사용자에게 추천합니다.
+     * 특정 술 목록을 사용자에게 추천합니다.
      *
      * 현재 술과 관련되어 추천하는 술 목록을 반환합니다.
-     *
      */
-    fun recommendAlcohols(alcoholRecommendRequest: AlcoholRecommendRequest): AlcoholListResponse
+    fun recommendAlcoholList(alcoholRecommendRequest: AlcoholRecommendRequest): AlcoholListResponse
 
 
 //    fun getAlcoholById(id: Int): AlcoholDetailResponse?                                     //

@@ -1,7 +1,7 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.service
 
-import io.github.ssudrinki.drinkibackend.domain.alcohol.data.dao.WishDto
-import io.github.ssudrinki.drinkibackend.domain.alcohol.repository.WishRepository
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.dao.WishDto
+import io.github.teamdrinki.drinkibackend.domain.alcohol.repository.WishRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

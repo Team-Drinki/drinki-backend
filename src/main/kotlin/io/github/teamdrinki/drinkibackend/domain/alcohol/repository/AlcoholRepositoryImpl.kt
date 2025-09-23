@@ -28,7 +28,7 @@ class AlcoholRepositoryImpl : AlcoholRepository {
         }
     }
 
-    override fun findListByFilters(
+    override fun findAllByFilters(
         page: Int, size: Int, sort: String,
         query: String, category: String, location: String, style: String, priceMin: Int, priceMax: Int, rating: Double
     ): PagedListResult<AlcoholEntity> {
@@ -75,8 +75,23 @@ class AlcoholRepositoryImpl : AlcoholRepository {
         }
     }
 
+    override fun findAllByOrderByViewCntDesc(
+        page: Int, size: Int
+    ): PagedListResult<AlcoholEntity> {
+        return transaction {
 
-//
+            val totalCnt = AlcoholEntity.all().count()
+
+            val entities = AlcoholEntity
+                .all()
+                .orderBy(AlcoholSortType.getOrderBy("View"))
+                .take(size)
+                .toList()
+
+            PagedListResult(entities, totalCnt)
+        }
+    }
+
 //    override fun create(name: String, proof: Short, categoryId: Int, styleId: Int, locationId: Int, content: String?, price: BigDecimal?, imageUrl: String?): Int {
 //        TODO("Not yet implemented")
 //    }

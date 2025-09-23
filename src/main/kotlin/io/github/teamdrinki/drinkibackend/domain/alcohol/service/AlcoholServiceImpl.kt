@@ -16,12 +16,10 @@ import kotlin.Int
 @Transactional(readOnly = true)
 class AlcoholServiceImpl(
         private val alcoholRepository: AlcoholRepository,
-        private val wishService: WishService,
-        private val tastingNoteService: TastingNoteService
 ) : AlcoholService {
 
     override fun searchAlcoholList(alcoholSearchRequest: AlcoholSearchRequest): AlcoholListResponse {
-        val pagedListResult  = alcoholRepository.findListByFilters(
+        val pagedListResult  = alcoholRepository.findAllByFilters(
             page     = alcoholSearchRequest.page,
             size     = alcoholSearchRequest.size,
             sort     = alcoholSearchRequest.sort,
@@ -78,9 +76,36 @@ class AlcoholServiceImpl(
         )
     }
 
-    override fun recommendAlcohols(alcoholRecommendRequest: AlcoholRecommendRequest): AlcoholListResponse {
+    override fun recommendAlcoholList(alcoholRecommendRequest: AlcoholRecommendRequest): AlcoholListResponse {
+        val pagedListResult = alcoholRepository.findAllByOrderByViewCntDesc(
+            page = alcoholRecommendRequest.page,
+            size = alcoholRecommendRequest.size,
+        )
 
-        TODO("Not yet implemented")
+        val alcoholListItems = pagedListResult.content.map { entity ->
+            AlcoholListItem(
+                id       = entity.id.value,
+                name     = entity.name,
+                image    = entity.imageUrl,
+                category = entity.category.name,
+                wish     = entity.wish,
+                rating   = entity.rating,
+                viewCnt  = entity.viewCnt,
+                noteCnt  = entity.noteCnt
+            )
+        }
+
+        val pageUtil = PageUtil.of(
+            page       = alcoholRecommendRequest.page,
+            size       = alcoholRecommendRequest.size,
+            totalCount = pagedListResult.totalCnt
+        )
+
+        return AlcoholListResponse(
+            items    = alcoholListItems,
+            pageUtil = pageUtil
+        )
+
     }
 
 

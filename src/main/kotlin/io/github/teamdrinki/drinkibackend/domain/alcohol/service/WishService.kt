@@ -1,6 +1,6 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.service
 
-import io.github.ssudrinki.drinkibackend.domain.alcohol.data.dao.WishDto
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.dao.WishDto
 
 /**
  * 술의 위시리스트 관련 비즈니스 로직을 처리하는 서비스

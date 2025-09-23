@@ -60,5 +60,21 @@ class AlcoholController(
         val response = alcoholService.getAlcoholDetail(userId, id)
         return ResponseEntity.ok(response)
     }
+
+    /**
+     * 추천 술 목록을 조회합니다.
+     *
+     * 추천 알고리즘을 통한 적합한 술 목록
+     *
+     *
+     * @return 추천된 술 목록
+     */
+    @GetMapping("/recommend")
+    fun getAlcoholRecommendations(
+            @Valid request: AlcoholRecommendRequest
+    ): ResponseEntity<AlcoholListResponse>{
+        val response = alcoholService.recommendAlcohols(request)
+        return ResponseEntity.ok(response)
+    }
 }
 

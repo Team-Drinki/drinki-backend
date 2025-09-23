@@ -1,6 +1,6 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.repository
 
-import io.github.ssudrinki.drinkibackend.domain.alcohol.data.dao.WishDto
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.dao.WishDto
 
 /**
  * 술 위시 정보를 관리하는 Repository 인터페이스

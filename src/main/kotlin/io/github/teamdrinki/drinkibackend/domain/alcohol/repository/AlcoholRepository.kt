@@ -34,10 +34,18 @@ interface AlcoholRepository {
      * @param rating 최소 평점
      * @return 검색된 술 목록, 총 항목 개수
      */
-    fun findListByFilters(page: Int, size: Int, sort: String, // AlcoholSearchRequest
+    fun findAllByFilters(page: Int, size: Int, sort: String, // AlcoholSearchRequest
                           query: String, category: String, location: String, style: String, priceMin: Int, priceMax: Int, rating: Double
     ): PagedListResult<AlcoholEntity>
 
+    /**
+     * 조회수가 높은 술 목록을 조회합니다.
+     *
+     * @param page 페이지 번호
+     * @param size 페이지 크기
+     * @return 조회수 높은 술 목록, 총 항목 개수
+     */
+    fun findAllByOrderByViewCntDesc(page: Int, size: Int): PagedListResult<AlcoholEntity>
 
 //    fun create(name: String, proof: Short, categoryId: Int, styleId: Int, locationId: Int,
 //               content: String?, price: BigDecimal?, imageUrl: String?): Int
