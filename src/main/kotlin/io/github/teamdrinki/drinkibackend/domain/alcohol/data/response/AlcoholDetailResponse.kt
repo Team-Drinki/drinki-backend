@@ -1,5 +1,7 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.data.response
 
+import java.math.BigDecimal
+
 /**
  * 술 상세 정보 조회를 위한 Response
  *
@@ -16,18 +18,16 @@ package io.github.teamdrinki.drinkibackend.domain.alcohol.data.response
  * @property description 술에 대한 상세 설명. 맛, 향, 제조 과정 등의 정보
  * @property wish 위시(좋아요) 수. 사용자들의 선호도를 나타내는 지표
  * @property rating 평균 평점. 0.0 ~ 5.0 범위의 소수점 값
- * @property isWished 현재 사용자의 위시 여부. true인 경우 이미 위시한 상태
  */
 data class AlcoholDetailResponse (
-        val id: Int,
-        val name: String,
-        val proof: Float,
-        val image: String?,
-        val category: String,
-        val location: String,
-        val style: String,
-        val description: String,
-        val wish: Int,
-        val rating: Float,
-        val isWished: Boolean,
+    val id: Int,
+    val name: String,
+    val proof: Float,
+    val image: String?,
+    val category: String,
+    val location: String,
+    val style: String,
+    val description: String,
+    val wish: Int,
+    val rating: BigDecimal,
 ) {}

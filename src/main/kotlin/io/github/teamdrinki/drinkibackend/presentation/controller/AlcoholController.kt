@@ -1,11 +1,10 @@
 package io.github.teamdrinki.drinkibackend.presentation.controller
 
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.request.AlcoholRecommendRequest
 import io.github.teamdrinki.drinkibackend.domain.alcohol.data.request.AlcoholSearchRequest
 import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholDetailResponse
-import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListItem
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListResponse
 import io.github.teamdrinki.drinkibackend.domain.alcohol.service.AlcoholService
-import io.github.teamdrinki.drinkibackend.domain.alcohol.service.WishService
-import io.github.teamdrinki.drinkibackend.domain.tastingnote.service.TastingNoteService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,9 +18,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/v1/alcohols")
 class AlcoholController(
-        private val alcoholService: AlcoholService,
-        private val wishService: WishService,
-        private val tastingNoteService: TastingNoteService,
+    private val alcoholService: AlcoholService,
 ) {
     /**
      * 술 목록을 검색합니다.
@@ -37,8 +34,8 @@ class AlcoholController(
     @GetMapping("/search")
     fun getAlcoholList(
             @Valid request: AlcoholSearchRequest
-    ): ResponseEntity<List<AlcoholListItem>> {
-        val response = alcoholService.searchAlcohols(request)
+    ): ResponseEntity<AlcoholListResponse> {
+        val response = alcoholService.searchAlcoholList(request)
         return ResponseEntity.ok(response)
     }
 

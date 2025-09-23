@@ -1,4 +1,6 @@
 package io.github.teamdrinki.drinkibackend.common.dto
 
-class PagedListResult {
-}
+data class PagedListResult<T>(
+    val content: List<T>,
+    val totalCnt: Long
+)

@@ -1,9 +1,9 @@
 [versions]
-kotlin = "2.0.0"
+kotlin = "2.2.0"
 kotlinx-serialization = "1.9.0"
 spring-boot = "3.5.3"
 junit-platform-launcher = "1.13.3"
-exposed = "0.61.0"
+exposed = "1.0.0-beta-3"
 #jackson-module-kotlin = "2.19.0"
 postgresql = "42.7.7"
 flyway = "11.10.5"

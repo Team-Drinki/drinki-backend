@@ -1,9 +1,9 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.service
 
-import io.github.ssudrinki.drinkibackend.domain.alcohol.data.dto.AlcoholDetailDto
-import io.github.ssudrinki.drinkibackend.domain.alcohol.data.request.AlcoholSearchRequest
-import io.github.ssudrinki.drinkibackend.domain.alcohol.data.response.AlcoholDetailResponse
-import io.github.ssudrinki.drinkibackend.domain.alcohol.data.response.AlcoholListItem
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.request.AlcoholRecommendRequest
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.request.AlcoholSearchRequest
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholDetailResponse
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListResponse
 
 /**
  * 술 관련 비즈니스 로직을 처리하는 서비스
@@ -23,7 +23,7 @@ interface AlcoholService {
      * @param alcoholSearchRequest 검색 조건 및 페이징 정보
      * @return 검색 조건에 맞는 술 목록
      */
-    fun searchAlcohols(alcoholSearchRequest: AlcoholSearchRequest): List<AlcoholListItem>
+    fun searchAlcoholList(alcoholSearchRequest: AlcoholSearchRequest): AlcoholListResponse
 
     /**
      * 특정 술의 상세 정보를 조회합니다.
@@ -35,8 +35,7 @@ interface AlcoholService {
      * @return 술의 종합적인 상세 정보
      * @throws AlcoholNotFoundException 존재하지 않는 술인 경우
      */
-    fun getAlcoholDetail(userId: Long, alcoholId: Int): AlcoholDetailDto
-
+    fun getAlcoholDetail(userId: Long, alcoholId: Int): AlcoholDetailResponse
 
     /**
      * 특정 술을 사용자에게 추천합니다.
@@ -44,7 +43,7 @@ interface AlcoholService {
      * 현재 술과 관련되어 추천하는 술 목록을 반환합니다.
      *
      */
-    fun recommendAlcohols(): List<AlcoholListItem>
+    fun recommendAlcohols(alcoholRecommendRequest: AlcoholRecommendRequest): AlcoholListResponse
 
 
 //    fun getAlcoholById(id: Int): AlcoholDetailResponse?                                     //

@@ -1,6 +1,7 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.repository
 
-import io.github.ssudrinki.drinkibackend.domain.alcohol.data.dao.AlcoholDao
+import io.github.teamdrinki.drinkibackend.common.dto.PagedListResult
+import io.github.teamdrinki.drinkibackend.schema.entity.AlcoholEntity
 
 /**
  * 술 정보를 관리하는 Repository 인터페이스
@@ -11,12 +12,12 @@ import io.github.ssudrinki.drinkibackend.domain.alcohol.data.dao.AlcoholDao
 interface AlcoholRepository {
 
     /**
-     * 검색 조건에 맞는 술 목록을 조회합니다.
+     * ID로 술을 조회합니다.
      *
      * @param alcoholId 조회할 술의 고유 식별자
      * @return 술 상세 정보
      */
-    fun findById(alcoholId: Int): AlcoholDao
+    fun findById(alcoholId: Int): AlcoholEntity
 
     /**
      * 검색 조건에 맞는 술 목록을 조회합니다.
@@ -31,14 +32,12 @@ interface AlcoholRepository {
      * @param priceMin 최소 가격
      * @param priceMax 최대 가격
      * @param rating 최소 평점
-     * @return 검색된 술 목록
+     * @return 검색된 술 목록, 총 항목 개수
      */
-//    fun searchAlcohols(query: String, page: Int, size: Int, sort: String,
-//                       category: String, location: String, style: String,
-//                       priceMin: Int, priceMax: Int, rating: Double // AlcoholSearchRequest
-//    ): List<AlcoholListItem>
-//
-//
+    fun findListByFilters(page: Int, size: Int, sort: String, // AlcoholSearchRequest
+                          query: String, category: String, location: String, style: String, priceMin: Int, priceMax: Int, rating: Double
+    ): PagedListResult<AlcoholEntity>
+
 
 //    fun create(name: String, proof: Short, categoryId: Int, styleId: Int, locationId: Int,
 //               content: String?, price: BigDecimal?, imageUrl: String?): Int
