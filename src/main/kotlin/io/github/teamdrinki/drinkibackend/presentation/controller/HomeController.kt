@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class HomeController {
 
-    @GetMapping("/", produces = ["text/plain"])
+    @GetMapping("/")
     fun home(): String {
         return "Hello, Welcome to Drinki Backend!"
     }
