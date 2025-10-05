@@ -16,7 +16,7 @@ buildscript {
 	}
 }
 
-group = "io.github.ssudrinki"
+group = "io.github.teamdrinki"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -48,7 +48,9 @@ dependencies {
 //	implementation(libs.jackson.module.kotlin)
 	runtimeOnly(libs.postgresql)
 	developmentOnly(libs.flyway.database.postgresql)
-	implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    testImplementation(libs.mockito.kotlin)
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 }
 
 kotlin {

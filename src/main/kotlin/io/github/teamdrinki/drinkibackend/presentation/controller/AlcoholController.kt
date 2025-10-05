@@ -32,10 +32,12 @@ class AlcoholController(
      * @example GET /api/v1/alcohols/search?page=0&size=10&category=whiskey&priceMin=30000
      */
     @GetMapping("/search")
-    fun getAlcoholList(
+    fun getSearchAlcoholList(
             @Valid request: AlcoholSearchRequest
     ): ResponseEntity<AlcoholListResponse> {
-        val response = alcoholService.searchAlcoholList(request)
+        val userId = 1L;
+
+        val response = alcoholService.searchAlcoholList(userId, request)
         return ResponseEntity.ok(response)
     }
 
@@ -73,7 +75,9 @@ class AlcoholController(
     fun getAlcoholRecommendations(
             @Valid request: AlcoholRecommendRequest
     ): ResponseEntity<AlcoholListResponse>{
-        val response = alcoholService.recommendAlcohols(request)
+        val userId = 1L;
+
+        val response = alcoholService.recommendAlcoholList(userId, request)
         return ResponseEntity.ok(response)
     }
 }

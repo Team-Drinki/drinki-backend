@@ -9,14 +9,13 @@ import org.jetbrains.exposed.v1.datetime.datetime
  * Exposed DAO 패턴을 사용합니다.
  */
 object Alcohols : IntIdTable("Alcohols") {
-    val tastingNote = reference("tasting_note_id", TastingNotes)
     val userId     = reference("user_id", Users)
     val name       = varchar("name", 255)
-    val image_url  = text("image_url")
+    val imageUrl   = text("image_url")
     val price      = decimal("price", 20, 5)
     val proof      = float("proof")
     val rating     = decimal("rating", 3, 2)                // 5점 만점 (0.0 ~ 5.0)
-    val wish       = integer("wish")
+    val wishCnt    = integer("wish_cnt")
     val viewCnt    = integer("view_cnt")
     val noteCnt    = integer("note_cnt")
     val content    = text("content")

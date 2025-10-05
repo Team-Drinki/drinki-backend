@@ -13,7 +13,7 @@ object AlcoholRequests : IntIdTable("AlcoholRequests") {
     val userId = reference("user_id", Users.id)
     val name = varchar("name", 255)
     val image_url = text("image_url")
-    val price = decimal("price", 5, 15)
+    val price = decimal("price", 20, 5)
     val proof = float("proof")
     val rating = float("rating")
     val wish = integer("wish")
