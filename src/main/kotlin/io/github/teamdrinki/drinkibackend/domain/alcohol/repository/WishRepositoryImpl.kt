@@ -1,57 +1,54 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.repository
 
-import io.github.teamdrinki.drinkibackend.domain.alcohol.data.dao.WishDto
+import io.github.teamdrinki.drinkibackend.common.dto.PagedListResult
+
+import io.github.teamdrinki.drinkibackend.schema.Alcohols
 import io.github.teamdrinki.drinkibackend.schema.Wishes
+import io.github.teamdrinki.drinkibackend.schema.entity.AlcoholEntity
+import io.github.teamdrinki.drinkibackend.schema.entity.WishEntity
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import org.jetbrains.exposed.v1.core.JoinType
+import org.jetbrains.exposed.v1.core.SortOrder
 import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.v1.core.and
 import org.jetbrains.exposed.v1.jdbc.deleteWhere
 import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
-import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.springframework.stereotype.Repository
-import schema.Users
 
 @Repository
 class WishRepositoryImpl : WishRepository {
 
-    override fun findByUserId(userId: Long): List<WishDto> {
+    override fun findByUserId(page: Int, size: Int, sort: String,
+                              userId: Long): PagedListResult<AlcoholEntity> {
+        val offset = ((page-1)*size)
+
         return transaction {
-            Wishes
-                .selectAll()
-                    .where{
-                        (Wishes.userId eq userId)
-                    }
-                    .map { row ->
-                        WishDto(
-                                id = row[Wishes.id],
-                                userId = row[Wishes.userId],
-                                alcoholId = row[Wishes.alcoholId],
-                                createdAt = row[Wishes.createdAt]
-                        )
-                    }
+            val query = AlcoholEntity
+                .wrapRows(
+                    Wishes.innerJoin(Alcohols)
+                        .select(Alcohols.columns)
+                        .where { Wishes.userId eq userId }
+                )
+
+            val totalCnt = query.count()
+            val entities = query
+                .orderBy(Wishes.createdAt to SortOrder.DESC)
+                .drop(offset)
+                .take(size)
+                .toList()
+
+            PagedListResult(entities, totalCnt)
         }
     }
 
-    override fun findByUserIdAndAlcoholId(userId: Long, alcoholId: Int): WishDto? {
+    override fun findByUserIdAndAlcoholId(userId: Long, alcoholId: Int): WishEntity? {
         return transaction {
-            Wishes
-                    .join(Users, JoinType.LEFT, Wishes.userId, Users.id)
-                    .selectAll()
-                    .where {
-                        (Wishes.userId eq userId) and (Wishes.alcoholId eq alcoholId)
-                    }
-                    .map { row ->
-                        WishDto(
-                                id = row[Wishes.id],
-                                userId = row[Wishes.userId],
-                                alcoholId = row[Wishes.alcoholId],
-                                createdAt = row[Wishes.createdAt]
-                        )
-                    }.singleOrNull()
+            WishEntity
+                .find { Wishes.userId eq userId }
+                .singleOrNull()
         }
     }
 

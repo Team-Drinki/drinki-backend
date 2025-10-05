@@ -1,6 +1,8 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.service
 
-import io.github.teamdrinki.drinkibackend.domain.alcohol.data.dao.WishDto
+
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.request.WishListRequest
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListResponse
 
 /**
  * 술의 위시리스트 관련 비즈니스 로직을 처리하는 서비스
@@ -49,6 +51,6 @@ interface WishService {
      * @param userId 유저 ID
      * @return 위시들의 리스트
      */
-    fun getWishList(userId: Long): List<WishDto>
+    fun getWishList(userId: Long, request: WishListRequest): AlcoholListResponse
 
 }

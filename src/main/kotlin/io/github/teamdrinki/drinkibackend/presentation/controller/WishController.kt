@@ -1,6 +1,9 @@
 package io.github.teamdrinki.drinkibackend.presentation.controller
 
-import io.github.ssudrinki.drinkibackend.domain.alcohol.service.WishService
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.request.WishListRequest
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListResponse
+import io.github.teamdrinki.drinkibackend.domain.alcohol.service.WishService
+import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -22,13 +25,13 @@ class WishController (
      *
      * @example POST /api/v1/alcohols/123/wishes
      */
-    @PostMapping("/{id}/wishes")
+    @PostMapping("/{alcoholId}")
     fun addWish(
-            @PathVariable id: Int
+            @PathVariable alcoholId: Int
     ): ResponseEntity<Unit>{
         val userId = 1L;
 
-        val response = wishService.addWish(userId, id)
+        val response = wishService.addWish(userId, alcoholId)
         return ResponseEntity.status(HttpStatus.CREATED).build()    // 201 Created
     }
 
@@ -43,13 +46,30 @@ class WishController (
      *
      * @example DELETE /api/v1/alcohols/123/wishes
      */
-    @DeleteMapping("/{id}/wishes")
+    @DeleteMapping("/{alcoholId}")
     fun deleteWish(
-            @PathVariable id: Int
+            @PathVariable alcoholId: Int
     ): ResponseEntity<Unit>{
         val userId = 1L;
 
-        val response = wishService.removeWish(userId, id)
+        val response = wishService.removeWish(userId, alcoholId)
         return ResponseEntity.noContent().build()   //204 No Content
+    }
+
+    /**
+     * 유저의 위시리스트를 조회합니다
+     *
+     * 로그인한 사용자의 위시리스트를 조회합니다
+     *
+     * @param
+     */
+    @GetMapping("/")
+    fun getWishList(
+        @Valid request: WishListRequest
+    ): ResponseEntity<AlcoholListResponse> {
+        val userId = 1L;
+
+        val response = wishService.getWishList(userId, request)
+        return ResponseEntity.ok(response)
     }
 }
