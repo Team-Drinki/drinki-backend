@@ -1,6 +1,7 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.repository
 
 import io.github.teamdrinki.drinkibackend.common.dto.PagedListResult
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListResponse
 import io.github.teamdrinki.drinkibackend.schema.entity.AlcoholEntity
 
 /**
@@ -34,8 +35,10 @@ interface AlcoholRepository {
      * @param rating 최소 평점
      * @return 검색된 술 목록, 총 항목 개수
      */
-    fun findAllByFilters(page: Int, size: Int, sort: String, // AlcoholSearchRequest
-                          query: String, category: String, location: String, style: String, priceMin: Int, priceMax: Int, rating: Double
+    fun findAllByFilters(
+        userId: Long?,
+        page: Int, size: Int, sort: String, // AlcoholSearchRequest
+        query: String, category: String, location: String, style: String, priceMin: Int, priceMax: Int, rating: Double
     ): PagedListResult<AlcoholEntity>
 
     /**

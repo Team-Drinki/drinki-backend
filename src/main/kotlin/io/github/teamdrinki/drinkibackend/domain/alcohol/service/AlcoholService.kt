@@ -23,7 +23,7 @@ interface AlcoholService {
      * @param alcoholSearchRequest 검색 조건 및 페이징 정보
      * @return 검색 조건에 맞는 술 목록
      */
-    fun searchAlcoholList(alcoholSearchRequest: AlcoholSearchRequest): AlcoholListResponse
+    fun searchAlcoholList(userId: Long?, alcoholSearchRequest: AlcoholSearchRequest): AlcoholListResponse
 
     /**
      * 특정 술의 상세 정보를 조회합니다.
@@ -42,8 +42,7 @@ interface AlcoholService {
      *
      * 현재 술과 관련되어 추천하는 술 목록을 반환합니다.
      */
-    fun recommendAlcoholList(alcoholRecommendRequest: AlcoholRecommendRequest): AlcoholListResponse
-
+    fun recommendAlcoholList(userId: Long, alcoholRecommendRequest: AlcoholRecommendRequest): AlcoholListResponse
 
 //    fun getAlcoholById(id: Int): AlcoholDetailResponse?                                     //
 //    fun createAlcohol(request: AlcoholCreateRequest): Int                                   // 새로운 술 등록

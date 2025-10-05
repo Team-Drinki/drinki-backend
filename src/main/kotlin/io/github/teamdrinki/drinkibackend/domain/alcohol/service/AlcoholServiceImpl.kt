@@ -7,7 +7,6 @@ import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholDe
 import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListItem
 import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListResponse
 import io.github.teamdrinki.drinkibackend.domain.alcohol.repository.AlcoholRepository
-import io.github.teamdrinki.drinkibackend.domain.tastingnote.service.TastingNoteService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import kotlin.Int
@@ -18,8 +17,9 @@ class AlcoholServiceImpl(
         private val alcoholRepository: AlcoholRepository,
 ) : AlcoholService {
 
-    override fun searchAlcoholList(alcoholSearchRequest: AlcoholSearchRequest): AlcoholListResponse {
+    override fun searchAlcoholList(userId: Long?, alcoholSearchRequest: AlcoholSearchRequest): AlcoholListResponse {
         val pagedListResult  = alcoholRepository.findAllByFilters(
+            userId   = userId,
             page     = alcoholSearchRequest.page,
             size     = alcoholSearchRequest.size,
             sort     = alcoholSearchRequest.sort,
@@ -39,10 +39,11 @@ class AlcoholServiceImpl(
                 name     = entity.name,
                 image    = entity.imageUrl,
                 category = entity.category.name,
-                wish     = entity.wish,
+                wish     = entity.wishCount,
                 rating   = entity.rating,
                 viewCnt  = entity.viewCnt,
-                noteCnt  = entity.noteCnt
+                noteCnt  = entity.noteCnt,
+                isWish   = entity.isWishedByUser(userId)
             )
         }
 
@@ -68,33 +69,37 @@ class AlcoholServiceImpl(
             proof       = alcohol.proof,
             image       = alcohol.imageUrl,
             rating      = alcohol.rating,
-            wish        = alcohol.wish,
+            wish        = alcohol.wishCount,
             description = alcohol.content,
             category    = alcohol.category.name,
             location    = alcohol.location.name,
             style       = alcohol.style.name,
+            isWish      = alcohol.isWishedByUser(userId)
         )
     }
 
-    override fun recommendAlcoholList(alcoholRecommendRequest: AlcoholRecommendRequest): AlcoholListResponse {
+    override fun recommendAlcoholList(userId: Long, alcoholRecommendRequest: AlcoholRecommendRequest): AlcoholListResponse {
         val pagedListResult = alcoholRepository.findAllByOrderByViewCntDesc(
             page = alcoholRecommendRequest.page,
             size = alcoholRecommendRequest.size,
         )
 
+        // PagedListResult에서 content 추출하여 Entity -> ListItem 변환
         val alcoholListItems = pagedListResult.content.map { entity ->
             AlcoholListItem(
                 id       = entity.id.value,
                 name     = entity.name,
                 image    = entity.imageUrl,
                 category = entity.category.name,
-                wish     = entity.wish,
+                wish     = entity.wishCount,
                 rating   = entity.rating,
                 viewCnt  = entity.viewCnt,
-                noteCnt  = entity.noteCnt
+                noteCnt  = entity.noteCnt,
+                isWish   = entity.isWishedByUser(userId)
             )
         }
 
+        // PageUtil 생성 - totalCnt 사용
         val pageUtil = PageUtil.of(
             page       = alcoholRecommendRequest.page,
             size       = alcoholRecommendRequest.size,
@@ -105,7 +110,6 @@ class AlcoholServiceImpl(
             items    = alcoholListItems,
             pageUtil = pageUtil
         )
-
     }
 
 

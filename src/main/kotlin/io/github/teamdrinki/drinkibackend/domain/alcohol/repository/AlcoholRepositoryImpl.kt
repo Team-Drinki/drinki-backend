@@ -6,7 +6,9 @@ import io.github.teamdrinki.drinkibackend.schema.AlcoholCategories
 import io.github.teamdrinki.drinkibackend.schema.AlcoholLocations
 import io.github.teamdrinki.drinkibackend.schema.AlcoholStyles
 import io.github.teamdrinki.drinkibackend.schema.Alcohols
+import io.github.teamdrinki.drinkibackend.schema.Wishes
 import io.github.teamdrinki.drinkibackend.schema.entity.AlcoholEntity
+import io.github.teamdrinki.drinkibackend.schema.entity.WishEntity
 import org.jetbrains.exposed.v1.core.Op
 import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.greaterEq
@@ -29,13 +31,14 @@ class AlcoholRepositoryImpl : AlcoholRepository {
     }
 
     override fun findAllByFilters(
+        userId: Long?,
         page: Int, size: Int, sort: String,
         query: String, category: String, location: String, style: String, priceMin: Int, priceMax: Int, rating: Double
     ): PagedListResult<AlcoholEntity> {
         val offset = ((page - 1) * size)
         var condition: Op<Boolean> = Op.TRUE
 
-        if (query.isNotBlank()) { // 검색어
+        if (query.isNotBlank()) {   // 검색어
             condition = condition and (Alcohols.name like "%$query%")
         }
 
@@ -47,7 +50,7 @@ class AlcoholRepositoryImpl : AlcoholRepository {
             condition = condition and (AlcoholLocations.name eq location)
         }
 
-        if (style.isNotBlank()) { // 스타일
+        if (style.isNotBlank()) {   // 스타일
             condition = condition and (AlcoholStyles.name eq style)
         }
 
@@ -56,7 +59,7 @@ class AlcoholRepositoryImpl : AlcoholRepository {
                     (Alcohols.price lessEq BigDecimal(priceMax))
         }
 
-        if (rating > 0.0) { // 평점
+        if (rating > 0.0) {     // 평점
             condition = condition and (Alcohols.rating greaterEq BigDecimal(rating))
         }
 
@@ -70,6 +73,14 @@ class AlcoholRepositoryImpl : AlcoholRepository {
                 .drop(offset)
                 .take(size)
                 .toList()
+
+            // eager loading으로 wishes 미리 로드 (N+1 방지)
+            if (userId != null && entities.isNotEmpty()) {
+                val alcoholIds = entities.map { it.id }
+                WishEntity.find {
+                    Wishes.alcoholId inList alcoholIds
+                }.toList() // 모든 wishes를 한 번에 로드
+            }
 
             PagedListResult(entities, totalCnt)
         }
