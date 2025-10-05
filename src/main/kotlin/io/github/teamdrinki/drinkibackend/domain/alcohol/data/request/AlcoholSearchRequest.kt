@@ -26,7 +26,7 @@ data class AlcoholSearchRequest(
 
         @field:Min(value = 1, message = "페이지 크기는 1 이상이어야 합니다")
         @field:Max(value = 100, message = "페이지 크기는 100 이하여야 합니다")
-        val size: Int = 10,
+        val size: Int = 9,
 
         @field:Pattern(
                 regexp = "^(CreatedAt|View|TastingNote|Like|Rating|PriceDesc|PriceAsc)$",

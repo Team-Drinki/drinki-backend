@@ -28,6 +28,7 @@ data class AlcoholDetailResponse (
     val location: String,
     val style: String,
     val description: String,
-    val wish: Int,
+    val wish: Long,
     val rating: BigDecimal,
+    val isWish: Boolean,
 ) {}

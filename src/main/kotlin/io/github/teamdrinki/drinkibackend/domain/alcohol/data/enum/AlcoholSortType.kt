@@ -26,7 +26,7 @@ enum class AlcoholSortType(val value: String) {
             return when(sortType) {
                 VIEW         -> Alcohols.viewCnt   to SortOrder.DESC
                 TASTING_NOTE -> Alcohols.noteCnt   to SortOrder.DESC
-                LIKE         -> Alcohols.wish      to SortOrder.DESC
+                LIKE         -> Alcohols.wishCnt   to SortOrder.DESC
                 RATING       -> Alcohols.rating    to SortOrder.DESC
                 PRICE_DESC   -> Alcohols.price     to SortOrder.DESC
                 PRICE_ASC    -> Alcohols.price     to SortOrder.ASC

@@ -1,5 +1,7 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.data.response
 
+import io.github.teamdrinki.drinkibackend.common.dto.PagedListResult
+import io.github.teamdrinki.drinkibackend.schema.entity.AlcoholEntity
 import java.math.BigDecimal
 
 /**
@@ -21,8 +23,9 @@ data class AlcoholListItem(
     val name: String,
     val image: String?,
     val category: String,
-    val wish: Int,
+    val wish: Long,
     val rating: BigDecimal,
     val viewCnt: Int,
-    val noteCnt: Int
+    val noteCnt: Int,
+    val isWish: Boolean,
 )
