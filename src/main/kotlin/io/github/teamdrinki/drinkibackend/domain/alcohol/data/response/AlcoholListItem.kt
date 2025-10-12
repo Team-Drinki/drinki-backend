@@ -1,7 +1,6 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.data.response
 
 import io.github.teamdrinki.drinkibackend.common.dto.PagedListResult
-import io.github.teamdrinki.drinkibackend.schema.entity.AlcoholEntity
 import java.math.BigDecimal
 
 /**
