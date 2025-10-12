@@ -16,7 +16,7 @@ buildscript {
 	}
 }
 
-group = "io.github.ssudrinki"
+group = "io.github.teamdrinki"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -30,38 +30,44 @@ repositories {
 }
 
 dependencies {
-	implementation(libs.kotlin.reflect)
-	implementation(libs.kotlinx.serialization.json)
-
-	testImplementation(libs.kotlin.test.junit5)
-    testRuntimeOnly(libs.junit.platform.launcher)
-
-	runtimeOnly(libs.postgresql)
-//    implementation(libs.flyway.core)
-    implementation(libs.flyway.database.postgresql)
+    // Kotlin
+    implementation(libs.kotlin.reflect)
+    implementation(libs.kotlinx.serialization.json)
+    
+    // Testing
     testImplementation(libs.kotlin.test.junit5)
     testRuntimeOnly(libs.junit.platform.launcher)
-    implementation(libs.jackson.module.kotlin)
-    implementation(libs.auth0.jwt)
-
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.spring.boot.starter.test)
+    
+    // Spring Boot
     implementation(libs.spring.boot.starter.web)
     implementation(libs.spring.boot.starter.data.jpa)
     implementation(libs.spring.boot.starter.security)
     implementation(libs.spring.boot.starter.oauth2.client)
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     developmentOnly(libs.spring.boot.devtools)
-    testImplementation(libs.spring.boot.starter.test)
-
-    implementation(libs.exposed.migration)
-    implementation(libs.exposed.core)
-    implementation(libs.exposed.dao)
-    implementation(libs.exposed.jdbc)
+    
+    // Exposed ORM
     implementation(libs.exposed.spring.boot.starter)
     implementation(libs.exposed.kotlin.datetime)
     implementation(libs.exposed.json)
-
+    implementation(libs.exposed.migration)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    
+    // Database
     runtimeOnly(libs.postgresql)
     implementation(libs.hikari)
-
+    
+    // Flyway
+    implementation(libs.flyway.database.postgresql)
+    // implementation(libs.flyway.core) // 주석 처리됨
+    
+    // Others
+    implementation(libs.jackson.module.kotlin)
+    implementation(libs.auth0.jwt)
 }
 
 kotlin {
