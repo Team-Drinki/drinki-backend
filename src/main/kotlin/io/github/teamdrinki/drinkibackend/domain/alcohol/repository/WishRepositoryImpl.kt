@@ -4,8 +4,8 @@ import io.github.teamdrinki.drinkibackend.common.dto.PagedListResult
 
 import io.github.teamdrinki.drinkibackend.schema.Alcohols
 import io.github.teamdrinki.drinkibackend.schema.Wishes
-import io.github.teamdrinki.drinkibackend.schema.entity.AlcoholEntity
-import io.github.teamdrinki.drinkibackend.schema.entity.WishEntity
+import io.github.teamdrinki.drinkibackend.schema.Alcohol
+import io.github.teamdrinki.drinkibackend.schema.Wish
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -22,11 +22,11 @@ import org.springframework.stereotype.Repository
 class WishRepositoryImpl : WishRepository {
 
     override fun findByUserId(page: Int, size: Int, sort: String,
-                              userId: Long): PagedListResult<AlcoholEntity> {
+                              userId: Long): PagedListResult<Alcohol> {
         val offset = ((page-1)*size)
 
         return transaction {
-            val query = AlcoholEntity
+            val query = Alcohol
                 .wrapRows(
                     Wishes.innerJoin(Alcohols)
                         .select(Alcohols.columns)
@@ -44,9 +44,9 @@ class WishRepositoryImpl : WishRepository {
         }
     }
 
-    override fun findByUserIdAndAlcoholId(userId: Long, alcoholId: Int): WishEntity? {
+    override fun findByUserIdAndAlcoholId(userId: Long, alcoholId: Int): Wish? {
         return transaction {
-            WishEntity
+            Wish
                 .find { Wishes.userId eq userId }
                 .singleOrNull()
         }

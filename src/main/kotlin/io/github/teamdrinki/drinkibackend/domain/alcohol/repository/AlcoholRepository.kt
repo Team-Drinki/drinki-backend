@@ -2,7 +2,7 @@ package io.github.teamdrinki.drinkibackend.domain.alcohol.repository
 
 import io.github.teamdrinki.drinkibackend.common.dto.PagedListResult
 import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListResponse
-import io.github.teamdrinki.drinkibackend.schema.entity.AlcoholEntity
+import io.github.teamdrinki.drinkibackend.schema.Alcohol
 
 /**
  * 술 정보를 관리하는 Repository 인터페이스
@@ -18,7 +18,7 @@ interface AlcoholRepository {
      * @param alcoholId 조회할 술의 고유 식별자
      * @return 술 상세 정보
      */
-    fun findById(alcoholId: Int): AlcoholEntity
+    fun findById(alcoholId: Int): Alcohol
 
     /**
      * 검색 조건에 맞는 술 목록을 조회합니다.
@@ -39,7 +39,7 @@ interface AlcoholRepository {
         userId: Long?,
         page: Int, size: Int, sort: String, // AlcoholSearchRequest
         query: String, category: String, location: String, style: String, priceMin: Int, priceMax: Int, rating: Double
-    ): PagedListResult<AlcoholEntity>
+    ): PagedListResult<Alcohol>
 
     /**
      * 조회수가 높은 술 목록을 조회합니다.
@@ -48,7 +48,7 @@ interface AlcoholRepository {
      * @param size 페이지 크기
      * @return 조회수 높은 술 목록, 총 항목 개수
      */
-    fun findAllByOrderByViewCntDesc(page: Int, size: Int): PagedListResult<AlcoholEntity>
+    fun findAllByOrderByViewCntDesc(page: Int, size: Int): PagedListResult<Alcohol>
 
 //    fun create(name: String, proof: Short, categoryId: Int, styleId: Int, locationId: Int,
 //               content: String?, price: BigDecimal?, imageUrl: String?): Int

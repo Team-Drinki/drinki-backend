@@ -6,9 +6,9 @@ import io.github.teamdrinki.drinkibackend.schema.AlcoholCategories
 import io.github.teamdrinki.drinkibackend.schema.AlcoholLocations
 import io.github.teamdrinki.drinkibackend.schema.AlcoholStyles
 import io.github.teamdrinki.drinkibackend.schema.Alcohols
+import io.github.teamdrinki.drinkibackend.schema.Wish
 import io.github.teamdrinki.drinkibackend.schema.Wishes
-import io.github.teamdrinki.drinkibackend.schema.entity.AlcoholEntity
-import io.github.teamdrinki.drinkibackend.schema.entity.WishEntity
+import io.github.teamdrinki.drinkibackend.schema.Alcohol
 import org.jetbrains.exposed.v1.core.Op
 import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.greaterEq
@@ -23,9 +23,9 @@ import java.math.BigDecimal
 @Repository
 class AlcoholRepositoryImpl : AlcoholRepository {
 
-    override fun findById(alcoholId: Int): AlcoholEntity {
+    override fun findById(alcoholId: Int): Alcohol {
         return transaction{
-            AlcoholEntity.findById(alcoholId)
+            Alcohol.findById(alcoholId)
                 ?: throw NoSuchElementException("Alcohol not found with id: $alcoholId")
         }
     }
@@ -34,7 +34,7 @@ class AlcoholRepositoryImpl : AlcoholRepository {
         userId: Long?,
         page: Int, size: Int, sort: String,
         query: String, category: String, location: String, style: String, priceMin: Int, priceMax: Int, rating: Double
-    ): PagedListResult<AlcoholEntity> {
+    ): PagedListResult<Alcohol> {
         val offset = ((page - 1) * size)
         var condition: Op<Boolean> = Op.TRUE
 
@@ -64,7 +64,7 @@ class AlcoholRepositoryImpl : AlcoholRepository {
         }
 
         return transaction {
-            val query = AlcoholEntity.find { condition }
+            val query = Alcohol.find { condition }
 
             // 전체 개수 조회
             val totalCnt = query.count()
@@ -77,7 +77,7 @@ class AlcoholRepositoryImpl : AlcoholRepository {
             // eager loading으로 wishes 미리 로드 (N+1 방지)
             if (userId != null && entities.isNotEmpty()) {
                 val alcoholIds = entities.map { it.id }
-                WishEntity.find {
+                Wish.find {
                     Wishes.alcoholId inList alcoholIds
                 }.toList() // 모든 wishes를 한 번에 로드
             }
@@ -88,12 +88,12 @@ class AlcoholRepositoryImpl : AlcoholRepository {
 
     override fun findAllByOrderByViewCntDesc(
         page: Int, size: Int
-    ): PagedListResult<AlcoholEntity> {
+    ): PagedListResult<Alcohol> {
         return transaction {
 
-            val totalCnt = AlcoholEntity.all().count()
+            val totalCnt = Alcohol.all().count()
 
-            val entities = AlcoholEntity
+            val entities = Alcohol
                 .all()
                 .orderBy(AlcoholSortType.getOrderBy("View"))
                 .take(size)

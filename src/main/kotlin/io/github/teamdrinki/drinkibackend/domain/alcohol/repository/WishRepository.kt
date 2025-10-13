@@ -1,9 +1,8 @@
 package io.github.teamdrinki.drinkibackend.domain.alcohol.repository
 
 import io.github.teamdrinki.drinkibackend.common.dto.PagedListResult
-import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListResponse
-import io.github.teamdrinki.drinkibackend.schema.entity.AlcoholEntity
-import io.github.teamdrinki.drinkibackend.schema.entity.WishEntity
+import io.github.teamdrinki.drinkibackend.schema.Alcohol
+import io.github.teamdrinki.drinkibackend.schema.Wish
 
 /**
  * 술 위시 정보를 관리하는 Repository 인터페이스
@@ -19,7 +18,7 @@ interface WishRepository {
      * @return 위시 리스트
      */
     fun findByUserId(page: Int, size: Int, sort: String,
-                     userId: Long): PagedListResult<AlcoholEntity>
+                     userId: Long): PagedListResult<Alcohol>
 
     /**
      * 사용자의 특정 술 위시 정보를 조회합니다.
@@ -28,7 +27,7 @@ interface WishRepository {
      * @param alcoholId 위시 조회할 술 ID
      * @return 특정 술의 위시
      */
-    fun findByUserIdAndAlcoholId(userId: Long, alcoholId: Int): WishEntity?
+    fun findByUserIdAndAlcoholId(userId: Long, alcoholId: Int): Wish?
 
     /**
      * 사용자의 술 위시를 추가합니다.
