@@ -36,3 +36,41 @@ docker compose -f docker-compose.local.yml up
 ```
 The above environment variables are also required when running this command.  
 you will need to apply migrations to get the server running properly.
+
+---
+
+# For Frontend Devs
+
+최초에 로컬에서 서버 돌리는 방법
+
+## 1. 환경변수 설정
+
+아래 환경변수를 설정
+- `DB_URL`
+  - ex) `jdbc:postgresql://localhost:5432/drinki`
+- `DB_USER`
+  - ex) `drinki_backend`
+- `DB_PASSWORD`
+  - ex) `1234567890`
+- `DB_NAME`
+  - ex) `drinki`
+
+## 2. docker container 생성
+
+아래 명령어를 실행해 docker container 생성
+
+```
+docker compose -f docker-compose.local.yml up
+```
+
+## 3. migration 적용
+
+2단계 명령어 실행하면 server 하나, DB 하나 이렇게 container가 2개 있을 것이다.  
+server container 정지하고 아래 명령어 실행 후 다시 실행
+
+```
+./gradlew flywayMigrate
+```
+
+
+
