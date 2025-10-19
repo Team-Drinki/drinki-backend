@@ -55,21 +55,4 @@ class WishController (
         val response = wishService.removeWish(userId, alcoholId)
         return ResponseEntity.noContent().build()   //204 No Content
     }
-
-    /**
-     * 유저의 위시리스트를 조회합니다
-     *
-     * 로그인한 사용자의 위시리스트를 조회합니다
-     *
-     * @param
-     */
-    @GetMapping("/")
-    fun getWishList(
-        @Valid request: WishListRequest
-    ): ResponseEntity<AlcoholListResponse> {
-        val userId = 1L;
-
-        val response = wishService.getWishList(userId, request)
-        return ResponseEntity.ok(response)
-    }
 }
