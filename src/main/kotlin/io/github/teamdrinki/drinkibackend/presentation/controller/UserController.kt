@@ -29,7 +29,7 @@ class UserController(
      *
      * @return
      */
-    @GetMapping("/profiles")
+    @GetMapping("/profiles/me")
     fun getUserProfile(
         @AuthenticationPrincipal userId: Long
     ): ResponseEntity<UserProfileResponse>{
@@ -42,7 +42,7 @@ class UserController(
      *
      * @return
      */
-    @PostMapping("/profiles")
+    @PostMapping("/profiles/me")
     fun updateUserProfile(
         @AuthenticationPrincipal userId: Long,
         @Valid @RequestBody request: UserProfileUpdateRequest
@@ -58,7 +58,7 @@ class UserController(
      *
      * @param
      */
-    @GetMapping("/")
+    @GetMapping("/wishes/me")
     fun getWishList(
         @AuthenticationPrincipal userId: Long,
         @Valid @RequestBody request: WishListRequest
