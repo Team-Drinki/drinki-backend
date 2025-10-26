@@ -44,13 +44,4 @@ interface WishService {
      * @throws
      */
     fun isWished(userId: Long, alcoholId: Int): Boolean
-
-    /**
-     * 사용자의 위시리스트를 조회합니다.
-     *
-     * @param userId 유저 ID
-     * @return 위시들의 리스트
-     */
-    fun getWishList(userId: Long, request: WishListRequest): AlcoholListResponse
-
 }

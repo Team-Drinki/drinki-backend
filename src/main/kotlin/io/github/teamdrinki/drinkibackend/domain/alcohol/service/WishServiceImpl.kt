@@ -33,40 +33,4 @@ class WishServiceImpl (
 
         return (wishDto != null)                               // null 이 아니면 true, null 이면 false
     }
-
-    @Transactional(readOnly = true)
-    override fun getWishList(userId: Long, request: WishListRequest): AlcoholListResponse {
-        val pagedListResult = wishRepository.findByUserId(
-            request.page,
-            request.size,
-            request.sort,
-            userId)
-
-        // PagedListResult에서 content 추출하여 Entity -> ListItem 변환
-        val alcoholItems = pagedListResult.content.map { alcohol ->
-            AlcoholListItem(
-                id       = alcohol.id.value,
-                name     = alcohol.name,
-                image    = alcohol.imageUrl,
-                category = alcohol.category.toString(),
-                wish     = alcohol.wishCount,
-                rating   = alcohol.rating,
-                viewCnt  = alcohol.viewCnt,
-                noteCnt  = alcohol.noteCnt,
-                isWish  = true
-            )
-        }
-
-        // PageUtil 생성 - totalCnt 사용
-        val pageUtil = PageUtil.of(
-            page       = request.page,
-            size       = request.size,
-            totalCount = pagedListResult.totalCnt
-        )
-
-        return AlcoholListResponse(
-            items    = alcoholItems,
-            pageUtil = pageUtil
-        )
-    }
 }

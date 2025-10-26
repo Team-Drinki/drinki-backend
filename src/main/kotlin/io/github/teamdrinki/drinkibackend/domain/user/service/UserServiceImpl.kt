@@ -1,7 +1,10 @@
 package io.github.teamdrinki.drinkibackend.domain.user.service
 
+import io.github.teamdrinki.drinkibackend.common.util.PageUtil
 import io.github.teamdrinki.drinkibackend.domain.alcohol.data.request.WishListRequest
+import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListItem
 import io.github.teamdrinki.drinkibackend.domain.alcohol.data.response.AlcoholListResponse
+import io.github.teamdrinki.drinkibackend.domain.alcohol.repository.WishRepository
 import io.github.teamdrinki.drinkibackend.domain.user.data.request.UserProfileUpdateRequest
 import io.github.teamdrinki.drinkibackend.domain.user.data.response.UserProfileResponse
 import io.github.teamdrinki.drinkibackend.domain.user.repository.UserRepository
@@ -12,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class UserServiceImpl(
     private val userRepository: UserRepository,
+    private val wishRepository: WishRepository,
 ) : UserService {
+
     override fun getUserProfile(
         userId: Long
     ): UserProfileResponse {
@@ -38,7 +43,38 @@ class UserServiceImpl(
         userId: Long,
         request: WishListRequest
     ): AlcoholListResponse {
-        TODO("Not yet implemented")
+        val pagedListResult = wishRepository.findByUserId(
+            request.page,
+            request.size,
+            request.sort,
+            userId)
+
+        // PagedListResult에서 content 추출하여 Entity -> ListItem 변환
+        val alcoholItems = pagedListResult.content.map { alcohol ->
+            AlcoholListItem(
+                id       = alcohol.id.value,
+                name     = alcohol.name,
+                image    = alcohol.imageUrl,
+                category = alcohol.category.toString(),
+                wish     = alcohol.wishCount,
+                rating   = alcohol.rating,
+                viewCnt  = alcohol.viewCnt,
+                noteCnt  = alcohol.noteCnt,
+                isWish  = true
+            )
+        }
+
+        // PageUtil 생성 - totalCnt 사용
+        val pageUtil = PageUtil.of(
+            page       = request.page,
+            size       = request.size,
+            totalCount = pagedListResult.totalCnt
+        )
+
+        return AlcoholListResponse(
+            items    = alcoholItems,
+            pageUtil = pageUtil
+        )
     }
 
 }
