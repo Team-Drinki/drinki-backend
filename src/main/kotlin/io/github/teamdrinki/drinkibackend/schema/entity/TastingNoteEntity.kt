@@ -1,6 +1,5 @@
 package io.github.teamdrinki.drinkibackend.schema.entity
 
-import io.github.teamdrinki.drinkibackend.schema.Alcohols
 import io.github.teamdrinki.drinkibackend.schema.TastingNotes
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.dao.IntEntity

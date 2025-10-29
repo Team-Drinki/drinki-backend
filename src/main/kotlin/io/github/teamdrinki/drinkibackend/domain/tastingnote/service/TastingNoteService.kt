@@ -1,7 +1,11 @@
 package io.github.teamdrinki.drinkibackend.domain.tastingnote.service
 
-import io.github.teamdrinki.drinkibackend.domain.tastingnote.dto.response.TastingNotesListItem
+import io.github.teamdrinki.drinkibackend.domain.tastingnote.data.request.TastingNoteListRequest
+import io.github.teamdrinki.drinkibackend.domain.tastingnote.data.response.TastingNoteListItem
+import io.github.teamdrinki.drinkibackend.domain.tastingnote.data.response.TastingNoteListResponse
+import org.springframework.http.ResponseEntity
 
 interface TastingNoteService {
-    fun getBestTastingNotesByAlcoholId(alcoholId: Int): List<TastingNotesListItem>
+    fun getBestTastingNotesByAlcoholId(alcoholId: Int): List<TastingNoteListItem>
+    fun getTastingNoteList(request: TastingNoteListRequest): ResponseEntity<TastingNoteListResponse>
 }
