@@ -1,7 +1,7 @@
 package io.github.teamdrinki.drinkibackend.domain.tastingnote.data.response
 
 data class TastingNoteListItem (
-    val noteId: Int,
+    val noteId: Long,
     val noteTitle: String,
     val alcoholCategory: String,
     val alcoholName: String,

@@ -2,11 +2,11 @@ package io.github.teamdrinki.drinkibackend.schema.entity
 
 import io.github.teamdrinki.drinkibackend.schema.TastingNotes
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
-import org.jetbrains.exposed.v1.dao.IntEntity
-import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.dao.LongEntity
+import org.jetbrains.exposed.v1.dao.LongEntityClass
 
-class TastingNoteEntity(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<TastingNoteEntity>(TastingNotes)
+class TastingNoteEntity(id: EntityID<Long>) : LongEntity(id) {
+    companion object : LongEntityClass<TastingNoteEntity>(TastingNotes)
 
     var alcoholId by TastingNotes.alcoholId
     var userId by TastingNotes.userId

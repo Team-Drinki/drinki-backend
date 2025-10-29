@@ -1,7 +1,9 @@
 package io.github.teamdrinki.drinkibackend.domain.tastingnote.repository
 
 import io.github.teamdrinki.drinkibackend.common.dto.PagedListResult
+import io.github.teamdrinki.drinkibackend.domain.tastingnote.data.response.TastingNoteDetailResponse
 import io.github.teamdrinki.drinkibackend.domain.tastingnote.data.response.TastingNoteListItem
+import io.github.teamdrinki.drinkibackend.schema.entity.TastingNoteEntity
 
 /**
  * 테이스팅 노트를 관리하는 Repository 인터페이스
@@ -30,8 +32,9 @@ interface TastingNoteRepository {
         sort: String
     ): PagedListResult<TastingNoteListItem>
 
+    fun findDetailById(noteId: Long): TastingNoteDetailResponse?
 
+    fun findById(noteId: Long): TastingNoteEntity?
 
-
-
+    fun delete(note: TastingNoteEntity)
 }

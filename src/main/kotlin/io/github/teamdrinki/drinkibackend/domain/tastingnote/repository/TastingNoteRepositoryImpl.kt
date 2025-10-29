@@ -1,6 +1,7 @@
 package io.github.teamdrinki.drinkibackend.domain.tastingnote.repository
 
 import io.github.teamdrinki.drinkibackend.common.dto.PagedListResult
+import io.github.teamdrinki.drinkibackend.domain.tastingnote.data.response.TastingNoteDetailResponse
 import io.github.teamdrinki.drinkibackend.domain.tastingnote.data.response.TastingNoteListItem
 import io.github.teamdrinki.drinkibackend.schema.AlcoholCategories
 import io.github.teamdrinki.drinkibackend.schema.Alcohols
@@ -81,6 +82,52 @@ class TastingNoteRepositoryImpl : TastingNoteRepository {
                     )
                 }
             PagedListResult(entities, totalCnt)
+        }
+    }
+
+    override fun findDetailById(noteId: Long): TastingNoteDetailResponse? {
+        return transaction {
+            val joinedTastingNotes = TastingNotes
+                .innerJoin(Users) {
+                    TastingNotes.userId eq Users.id
+                }
+
+            val entities = joinedTastingNotes
+                .select(TastingNotes.columns + Users.columns)
+                .where { TastingNotes.id eq noteId }
+                .map { row ->
+                    val tastingNote = TastingNoteEntity.wrapRow(row)
+
+                    TastingNoteDetailResponse(
+                        noteId = tastingNote.id.value,
+                        title = tastingNote.title,
+                        writerId = row[Users.id].value,
+                        writerName = row[Users.nickname],
+                        writerImage = row[Users.profileImageUrl] ?: "",
+                        like = 1,   // TODO: 좋아요, 싫어요, 조회수 로직 추가
+                        unlike = 1,
+                        viewer = 1,
+                        createdTime = tastingNote.createdAt.toString(), // TODO: 시간 포맷팅
+                        aroma_note = tastingNote.aromaNote,
+                        palate_note = tastingNote.palateNote,
+                        finish_note = tastingNote.finishNote,
+                        images = listOf(TastingNotes.image_url.toString()),
+                        comments = listOf()
+                    )
+                }.firstOrNull()
+            entities
+        }
+    }
+
+    override fun findById(noteId: Long): TastingNoteEntity? {
+        return transaction {
+            TastingNoteEntity.findById(noteId)
+        }
+    }
+
+    override fun delete(note: TastingNoteEntity) {
+        transaction {
+            note.delete()
         }
     }
 }
